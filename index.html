@@ -1,0 +1,2839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketplace Data Intelligence | Product Case Study</title>
+
+<style>
+:root{
+  --bg:#f6f8fb;
+  --surface:#ffffff;
+  --surface2:#f8fafc;
+  --text:#142033;
+  --muted:#667085;
+  --border:#e5e9f0;
+  --blue:#3157d5;
+  --blue2:#5b7cff;
+  --purple:#7b61ff;
+  --green:#15a66f;
+  --orange:#f59e0b;
+  --red:#e5484d;
+  --navy:#172554;
+  --shadow:0 8px 30px rgba(16,24,40,.07);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,input,select,textarea{font:inherit}
+
+button{cursor:pointer}
+
+.layout{
+  display:grid;
+  grid-template-columns:250px minmax(0,1fr);
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  position:fixed;
+  width:250px;
+  height:100vh;
+  padding:28px 18px;
+  background:#101a37;
+  color:white;
+  z-index:20;
+}
+
+.brand{
+  padding:0 10px 26px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  background:linear-gradient(135deg,#5877ff,#9c6cff);
+  margin-bottom:13px;
+}
+
+.brand h2{
+  font-size:16px;
+  margin:0;
+}
+
+.brand p{
+  color:#aab4d0;
+  font-size:12px;
+  line-height:1.5;
+  margin:6px 0 0;
+}
+
+.nav{
+  margin-top:24px;
+}
+
+.nav-label{
+  color:#7582a8;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.3px;
+  padding:0 12px 9px;
+}
+
+.nav-item{
+  border:0;
+  background:transparent;
+  color:#aeb9d6;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  width:100%;
+  padding:11px 12px;
+  border-radius:9px;
+  margin:3px 0;
+  text-align:left;
+  transition:.2s;
+}
+
+.nav-item:hover{
+  color:white;
+  background:rgba(255,255,255,.07);
+}
+
+.nav-item.active{
+  background:linear-gradient(90deg,rgba(83,111,255,.25),rgba(124,92,255,.12));
+  color:white;
+}
+
+.nav-icon{
+  width:25px;
+  height:25px;
+  border-radius:7px;
+  background:rgba(255,255,255,.08);
+  display:grid;
+  place-items:center;
+  font-size:12px;
+}
+
+.sidebar-bottom{
+  position:absolute;
+  bottom:22px;
+  left:20px;
+  right:20px;
+  border-top:1px solid rgba(255,255,255,.1);
+  padding-top:17px;
+  color:#8995b7;
+  font-size:11px;
+  line-height:1.6;
+}
+
+/* MAIN */
+
+.main{
+  grid-column:2;
+  min-width:0;
+}
+
+.topbar{
+  height:68px;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 34px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.breadcrumb{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.breadcrumb strong{
+  color:var(--text);
+}
+
+.top-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.badge.blue{background:#eef2ff;color:#415cc7}
+.badge.green{background:#eafaf4;color:#12835b}
+.badge.orange{background:#fff7e7;color:#b56f00}
+.badge.red{background:#fff0f1;color:#c7343b}
+.badge.gray{background:#f1f3f7;color:#667085}
+
+.content{
+  padding:34px;
+  max-width:1600px;
+  margin:auto;
+}
+
+.page{
+  display:none;
+  animation:fade .25s ease;
+}
+
+.page.active{display:block}
+
+@keyframes fade{
+  from{opacity:.4;transform:translateY(5px)}
+  to{opacity:1;transform:none}
+}
+
+/* HERO */
+
+.hero{
+  background:
+  radial-gradient(circle at 90% 10%,rgba(119,92,255,.15),transparent 28%),
+  radial-gradient(circle at 75% 80%,rgba(60,115,255,.12),transparent 25%),
+  linear-gradient(135deg,#172554,#101a37);
+  color:white;
+  border-radius:18px;
+  padding:38px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.eyebrow{
+  text-transform:uppercase;
+  font-size:11px;
+  letter-spacing:1.5px;
+  font-weight:800;
+  color:#7384b7;
+}
+
+.hero .eyebrow{color:#aebeff}
+
+.hero h1{
+  max-width:800px;
+  font-size:38px;
+  line-height:1.08;
+  margin:12px 0 15px;
+  letter-spacing:-1.3px;
+}
+
+.hero p{
+  max-width:790px;
+  color:#c5cee5;
+  line-height:1.7;
+  margin:0;
+  font-size:14px;
+}
+
+.hero-bottom{
+  display:flex;
+  gap:12px;
+  margin-top:25px;
+  flex-wrap:wrap;
+}
+
+.hero-pill{
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.1);
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:11px;
+  color:#dce3f6;
+}
+
+/* COMMON */
+
+.section-head{
+  margin-bottom:23px;
+}
+
+.section-head h1{
+  margin:5px 0 8px;
+  font-size:30px;
+  letter-spacing:-.7px;
+}
+
+.section-head p{
+  margin:0;
+  color:var(--muted);
+  max-width:850px;
+  line-height:1.65;
+  font-size:14px;
+}
+
+.grid{
+  display:grid;
+  gap:18px;
+}
+
+.grid-4{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.grid-3{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:0 3px 14px rgba(16,24,40,.035);
+}
+
+.card-pad{padding:22px}
+
+.card-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.card-title h3{
+  margin:0;
+  font-size:14px;
+}
+
+.card-title span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.metric{
+  padding:20px;
+}
+
+.metric-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.metric-icon{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:#f0f3ff;
+  color:var(--blue);
+  font-size:14px;
+}
+
+.metric-label{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:600;
+}
+
+.metric-value{
+  font-size:27px;
+  font-weight:800;
+  margin:13px 0 7px;
+  letter-spacing:-.7px;
+}
+
+.metric-foot{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.up{color:var(--green);font-weight:700}
+.down{color:var(--red);font-weight:700}
+
+.mt{margin-top:18px}
+.mt-lg{margin-top:28px}
+
+/* BAR CHART */
+
+.chart{
+  height:240px;
+  display:flex;
+  align-items:flex-end;
+  gap:12px;
+  padding-top:25px;
+  border-bottom:1px solid var(--border);
+}
+
+.bar-wrap{
+  flex:1;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  position:relative;
+}
+
+.bar{
+  width:72%;
+  min-width:14px;
+  background:linear-gradient(180deg,#5976ff,#3157d5);
+  border-radius:6px 6px 0 0;
+  transition:.3s;
+  position:relative;
+}
+
+.bar:hover{opacity:.8}
+
+.bar-label{
+  margin-top:8px;
+  font-size:10px;
+  color:var(--muted);
+}
+
+.bar-value{
+  position:absolute;
+  top:-19px;
+  width:100%;
+  text-align:center;
+  font-size:9px;
+  color:var(--muted);
+}
+
+/* HEALTH */
+
+.health-row{
+  display:grid;
+  grid-template-columns:140px 1fr 45px;
+  align-items:center;
+  gap:12px;
+  margin:14px 0;
+  font-size:12px;
+}
+
+.progress{
+  height:7px;
+  background:#eef1f5;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.progress > span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,#3157d5,#7965ff);
+  border-radius:999px;
+}
+
+/* DEDUP */
+
+.control-panel{
+  padding:22px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+
+.slider-row{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+input[type=range]{
+  width:100%;
+  accent-color:var(--blue);
+}
+
+.threshold{
+  min-width:68px;
+  text-align:center;
+  padding:9px 10px;
+  background:#eef2ff;
+  color:var(--blue);
+  border-radius:9px;
+  font-weight:800;
+}
+
+.tradeoffs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:18px;
+}
+
+.trade{
+  padding:14px;
+  background:var(--surface2);
+  border-radius:10px;
+}
+
+.trade small{
+  color:var(--muted);
+  display:block;
+}
+
+.trade strong{
+  display:block;
+  font-size:20px;
+  margin-top:5px;
+}
+
+.compare{
+  display:grid;
+  grid-template-columns:1fr 70px 1fr;
+  gap:18px;
+  align-items:stretch;
+}
+
+.listing{
+  padding:22px;
+}
+
+.listing-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.listing h3{
+  font-size:16px;
+  margin:10px 0 5px;
+}
+
+.listing-address{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.listing-img{
+  height:145px;
+  margin:16px 0;
+  border-radius:12px;
+  background:
+    linear-gradient(rgba(15,23,42,.08),rgba(15,23,42,.15)),
+    linear-gradient(135deg,#dce6f5,#aebfdb);
+  display:flex;
+  align-items:flex-end;
+  padding:14px;
+  color:white;
+  font-size:11px;
+}
+
+.attributes{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.attr{
+  background:var(--surface2);
+  border-radius:9px;
+  padding:10px;
+  font-size:11px;
+}
+
+.attr span{
+  color:var(--muted);
+  display:block;
+  margin-bottom:4px;
+}
+
+.match-center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.score-ring{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:conic-gradient(var(--green) 0 94%,#e9edf3 94% 100%);
+  position:relative;
+}
+
+.score-ring:before{
+  content:"";
+  position:absolute;
+  width:48px;
+  height:48px;
+  background:white;
+  border-radius:50%;
+}
+
+.score-ring strong{
+  position:relative;
+  font-size:13px;
+}
+
+.match-line{
+  width:1px;
+  height:80px;
+  background:var(--border);
+  margin:8px;
+}
+
+.decision{
+  font-size:10px;
+  font-weight:800;
+  color:var(--green);
+  text-align:center;
+}
+
+/* TABLE */
+
+.table-wrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:750px;
+}
+
+th{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  color:#7b8498;
+  text-align:left;
+  background:#fafbfc;
+  padding:12px 15px;
+  border-bottom:1px solid var(--border);
+}
+
+td{
+  padding:14px 15px;
+  border-bottom:1px solid var(--border);
+  font-size:12px;
+}
+
+tr:last-child td{border-bottom:0}
+
+.partner{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.partner-logo{
+  width:29px;
+  height:29px;
+  border-radius:8px;
+  background:#edf1ff;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  color:var(--blue);
+  font-size:10px;
+}
+
+/* QUALITY */
+
+.score-card{
+  display:flex;
+  gap:25px;
+  align-items:center;
+}
+
+.big-score{
+  min-width:135px;
+  width:135px;
+  height:135px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:conic-gradient(var(--green) 0 82%,#edf0f4 82%);
+  position:relative;
+}
+
+.big-score:before{
+  content:"";
+  position:absolute;
+  width:104px;
+  height:104px;
+  background:white;
+  border-radius:50%;
+}
+
+.big-score div{
+  position:relative;
+  text-align:center;
+}
+
+.big-score strong{
+  font-size:30px;
+}
+
+.big-score small{
+  display:block;
+  color:var(--muted);
+}
+
+.quality-components{flex:1}
+
+.quality-row{
+  display:grid;
+  grid-template-columns:150px 1fr 42px;
+  gap:10px;
+  align-items:center;
+  margin:13px 0;
+  font-size:11px;
+}
+
+/* FUNNEL */
+
+.funnel{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:7px;
+  padding:12px;
+}
+
+.funnel-step{
+  padding:13px;
+  color:white;
+  text-align:center;
+  border-radius:7px;
+  background:linear-gradient(90deg,#3157d5,#6f63ff);
+  font-size:11px;
+}
+
+.funnel-step strong{
+  display:block;
+  font-size:17px;
+  margin-bottom:3px;
+}
+
+/* AB */
+
+.ab-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.variant{
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.variant.treatment{
+  border:1px solid #bfcaff;
+  background:#fafbff;
+}
+
+.variant h4{
+  margin:0 0 14px;
+}
+
+.variant-number{
+  font-size:28px;
+  font-weight:800;
+}
+
+.variant small{
+  color:var(--muted);
+}
+
+/* AI */
+
+.search-box{
+  display:flex;
+  gap:10px;
+  padding:8px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.search-box input{
+  flex:1;
+  border:0;
+  outline:0;
+  padding:10px;
+  color:var(--text);
+}
+
+.btn{
+  border:0;
+  background:var(--blue);
+  color:white;
+  border-radius:9px;
+  padding:10px 16px;
+  font-weight:700;
+  font-size:12px;
+}
+
+.btn.secondary{
+  background:#eef2ff;
+  color:var(--blue);
+}
+
+.ai-flow{
+  display:grid;
+  grid-template-columns:1fr 45px 1fr 45px 1fr;
+  gap:10px;
+  align-items:center;
+}
+
+.ai-box{
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:white;
+  min-height:150px;
+}
+
+.ai-box h4{
+  margin:0 0 12px;
+  font-size:13px;
+}
+
+.ai-arrow{
+  text-align:center;
+  color:#8993aa;
+  font-size:20px;
+}
+
+.token{
+  display:inline-block;
+  margin:3px;
+  padding:5px 7px;
+  background:#eef2ff;
+  color:#415cc7;
+  border-radius:6px;
+  font-size:10px;
+}
+
+.result-card{
+  display:grid;
+  grid-template-columns:90px 1fr auto;
+  gap:14px;
+  align-items:center;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  margin-top:10px;
+}
+
+.result-img{
+  height:70px;
+  border-radius:9px;
+  background:linear-gradient(135deg,#dbe7f5,#9db3d0);
+}
+
+.result-card h4{
+  margin:0 0 5px;
+  font-size:13px;
+}
+
+.result-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:10px;
+}
+
+/* SQL */
+
+.code{
+  background:#0e172d;
+  color:#cbd5e1;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.code-head{
+  display:flex;
+  justify-content:space-between;
+  padding:11px 15px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  color:#8fa0c3;
+  font-size:10px;
+}
+
+pre{
+  margin:0;
+  padding:20px;
+  overflow:auto;
+  line-height:1.7;
+  font-size:12px;
+  white-space:pre;
+}
+
+.sql-blue{color:#8ab4ff}
+.sql-purple{color:#d4a6ff}
+.sql-green{color:#8ce5b3}
+.sql-yellow{color:#ffd580}
+
+/* ROADMAP */
+
+.roadmap{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.roadmap-col{
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:white;
+  overflow:hidden;
+}
+
+.roadmap-head{
+  padding:18px;
+  border-bottom:1px solid var(--border);
+}
+
+.roadmap-head span{
+  color:var(--blue);
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.roadmap-head h3{
+  margin:5px 0 0;
+}
+
+.roadmap-body{padding:13px}
+
+.road-item{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:13px;
+  margin-bottom:10px;
+}
+
+.road-item:last-child{margin-bottom:0}
+
+.road-item strong{
+  font-size:12px;
+  display:block;
+}
+
+.road-item p{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.5;
+  margin:6px 0 10px;
+}
+
+.tags{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.tag{
+  padding:4px 6px;
+  background:#f1f3f7;
+  color:#667085;
+  font-size:9px;
+  border-radius:5px;
+}
+
+/* DECISION */
+
+.decision-card{
+  padding:22px;
+  border-left:4px solid var(--blue);
+}
+
+.decision-card h3{
+  margin:0 0 8px;
+}
+
+.decision-card p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+
+.decision-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+  margin-top:16px;
+}
+
+.decision-box{
+  padding:13px;
+  background:var(--surface2);
+  border-radius:9px;
+}
+
+.decision-box span{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  text-transform:uppercase;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.decision-box strong{
+  font-size:11px;
+  line-height:1.5;
+  display:block;
+}
+
+/* MOBILE */
+
+.mobile-menu{display:none}
+
+@media(max-width:1050px){
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-3{grid-template-columns:1fr}
+  .compare{grid-template-columns:1fr}
+  .match-center{flex-direction:row}
+  .match-line{width:80px;height:1px}
+  .roadmap{grid-template-columns:1fr}
+  .ai-flow{grid-template-columns:1fr}
+  .ai-arrow{transform:rotate(90deg)}
+}
+
+@media(max-width:760px){
+  .layout{display:block}
+  .sidebar{display:none}
+  .main{grid-column:auto}
+  .content{padding:20px}
+  .topbar{padding:0 20px}
+  .grid-4,.grid-2{grid-template-columns:1fr}
+  .tradeoffs{grid-template-columns:1fr 1fr}
+  .hero{padding:28px}
+  .hero h1{font-size:29px}
+  .ab-grid{grid-template-columns:1fr}
+  .decision-grid{grid-template-columns:1fr}
+  .score-card{flex-direction:column}
+  .mobile-menu{display:block}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+  <div class="brand">
+    <div class="brand-mark">MI</div>
+    <h2>Marketplace Intelligence</h2>
+    <p>Data Infrastructure<br>Product Case Study</p>
+  </div>
+
+  <nav class="nav">
+
+    <div class="nav-label">CASE STUDY</div>
+
+    <button class="nav-item active" data-page="overview">
+      <span class="nav-icon">01</span> Executive Overview
+    </button>
+
+    <button class="nav-item" data-page="dedup">
+      <span class="nav-icon">02</span> Deduplication Lab
+    </button>
+
+    <button class="nav-item" data-page="quality">
+      <span class="nav-icon">03</span> Quality Score
+    </button>
+
+    <button class="nav-item" data-page="impact">
+      <span class="nav-icon">04</span> Marketplace Impact
+    </button>
+
+    <button class="nav-item" data-page="ai">
+      <span class="nav-icon">05</span> AI Readiness
+    </button>
+
+    <button class="nav-item" data-page="sql">
+      <span class="nav-icon">06</span> SQL Analytics
+    </button>
+
+    <button class="nav-item" data-page="roadmap">
+      <span class="nav-icon">07</span> 90-Day Roadmap
+    </button>
+
+    <button class="nav-item" data-page="decisions">
+      <span class="nav-icon">08</span> Product Decisions
+    </button>
+
+  </nav>
+
+  <div class="sidebar-bottom">
+    Independent product case study<br>
+    Synthetic marketplace data<br><br>
+    Built for Product Management portfolio
+  </div>
+
+</aside>
+
+
+<main class="main">
+
+<header class="topbar">
+
+  <div class="breadcrumb">
+    Product Case Study /
+    <strong id="pageName">Executive Overview</strong>
+  </div>
+
+  <div class="top-actions">
+    <span class="badge green">● Synthetic Data</span>
+    <span class="badge blue">Marketplace Data</span>
+  </div>
+
+</header>
+
+
+<div class="content">
+
+<!-- ====================================================== -->
+<!-- OVERVIEW -->
+<!-- ====================================================== -->
+
+<section class="page active" id="overview">
+
+<div class="hero">
+
+  <div class="eyebrow">Product Case Study · Marketplace Data Infrastructure</div>
+
+  <h1>Turning fragmented accommodation supply into a trusted, deduplicated and AI-ready catalog.</h1>
+
+  <p>
+    A product strategy for aggregating millions of accommodation offers across
+    heterogeneous supply partners while improving matching accuracy, catalog
+    quality, traveler discovery and downstream booking conversion.
+  </p>
+
+  <div class="hero-bottom">
+    <span class="hero-pill">15M+ accommodations</span>
+    <span class="hero-pill">1,000+ supply partners</span>
+    <span class="hero-pill">ML matching</span>
+    <span class="hero-pill">Data quality</span>
+    <span class="hero-pill">AI distribution</span>
+  </div>
+
+</div>
+
+
+<div class="grid grid-4 mt">
+
+  <div class="card metric">
+    <div class="metric-top">
+      <span class="metric-label">Catalog Listings</span>
+      <span class="metric-icon">DB</span>
+    </div>
+    <div class="metric-value">15.4M</div>
+    <div class="metric-foot"><span class="up">+3.2%</span> vs previous period</div>
+  </div>
+
+  <div class="card metric">
+    <div class="metric-top">
+      <span class="metric-label">Duplicate Rate</span>
+      <span class="metric-icon">↔</span>
+    </div>
+    <div class="metric-value">4.8%</div>
+    <div class="metric-foot"><span class="up">↓ 1.4 pp</span> after matching improvements</div>
+  </div>
+
+  <div class="card metric">
+    <div class="metric-top">
+      <span class="metric-label">Catalog Quality Score</span>
+      <span class="metric-icon">QS</span>
+    </div>
+    <div class="metric-value">82.4</div>
+    <div class="metric-foot"><span class="up">+6.7 pts</span> quality improvement</div>
+  </div>
+
+  <div class="card metric">
+    <div class="metric-top">
+      <span class="metric-label">AI-Ready Inventory</span>
+      <span class="metric-icon">AI</span>
+    </div>
+    <div class="metric-value">71%</div>
+    <div class="metric-foot"><span class="up">+11 pp</span> structured coverage</div>
+  </div>
+
+</div>
+
+
+<div class="grid grid-2 mt">
+
+<div class="card card-pad">
+
+  <div class="card-title">
+    <h3>Catalog quality evolution</h3>
+    <span>Simulated · Last 8 months</span>
+  </div>
+
+  <div class="chart" id="qualityChart"></div>
+
+</div>
+
+
+<div class="card card-pad">
+
+  <div class="card-title">
+    <h3>Marketplace data health</h3>
+    <span>Current state</span>
+  </div>
+
+  <div class="health-row">
+    <span>Matching accuracy</span>
+    <div class="progress"><span style="width:94%"></span></div>
+    <strong>94%</strong>
+  </div>
+
+  <div class="health-row">
+    <span>Content completeness</span>
+    <div class="progress"><span style="width:86%"></span></div>
+    <strong>86%</strong>
+  </div>
+
+  <div class="health-row">
+    <span>Location accuracy</span>
+    <div class="progress"><span style="width:91%"></span></div>
+    <strong>91%</strong>
+  </div>
+
+  <div class="health-row">
+    <span>Image coverage</span>
+    <div class="progress"><span style="width:89%"></span></div>
+    <strong>89%</strong>
+  </div>
+
+  <div class="health-row">
+    <span>Availability freshness</span>
+    <div class="progress"><span style="width:77%"></span></div>
+    <strong>77%</strong>
+  </div>
+
+  <div class="health-row">
+    <span>AI structured fields</span>
+    <div class="progress"><span style="width:71%"></span></div>
+    <strong>71%</strong>
+  </div>
+
+</div>
+
+</div>
+
+
+<div class="grid grid-3 mt">
+
+<div class="card card-pad">
+  <div class="eyebrow">01 · MATCH</div>
+  <h3>One property, one identity</h3>
+  <p style="color:var(--muted);font-size:12px;line-height:1.7">
+    Improve entity resolution across heterogeneous partner feeds while
+    balancing false merges against unresolved duplicates.
+  </p>
+</div>
+
+<div class="card card-pad">
+  <div class="eyebrow">02 · QUALITY</div>
+  <h3>Define what good data means</h3>
+  <p style="color:var(--muted);font-size:12px;line-height:1.7">
+    Build a measurable quality framework that connects listing completeness,
+    accuracy and freshness with marketplace performance.
+  </p>
+</div>
+
+<div class="card card-pad">
+  <div class="eyebrow">03 · DISTRIBUTE</div>
+  <h3>Structure inventory for AI</h3>
+  <p style="color:var(--muted);font-size:12px;line-height:1.7">
+    Turn accommodation inventory into machine-readable entities that can
+    power classic search, conversational discovery and future channels.
+  </p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ====================================================== -->
+<!-- DEDUP -->
+<!-- ====================================================== -->
+
+<section class="page" id="dedup">
+
+<div class="section-head">
+  <div class="eyebrow">Matching & Entity Resolution</div>
+  <h1>Deduplication Lab</h1>
+  <p>
+    A single accommodation can arrive from multiple supply partners with different
+    names, images, descriptions and coordinates. The product challenge is choosing
+    the matching threshold that maximizes marketplace value without incorrectly
+    merging distinct properties.
+  </p>
+</div>
+
+
+<div class="control-panel">
+
+  <div class="card-title">
+    <h3>Matching confidence threshold</h3>
+    <span>Interactive model evaluation</span>
+  </div>
+
+  <div class="slider-row">
+    <input id="thresholdSlider" type="range" min="60" max="99" value="85">
+    <div class="threshold" id="thresholdValue">0.85</div>
+  </div>
+
+  <div class="tradeoffs">
+
+    <div class="trade">
+      <small>Precision</small>
+      <strong id="precision">94.2%</strong>
+    </div>
+
+    <div class="trade">
+      <small>Recall</small>
+      <strong id="recall">88.1%</strong>
+    </div>
+
+    <div class="trade">
+      <small>False Merge Rate</small>
+      <strong id="falseMerge">1.8%</strong>
+    </div>
+
+    <div class="trade">
+      <small>Unresolved Duplicates</small>
+      <strong id="unresolved">4.8%</strong>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="compare mt">
+
+<div class="card listing">
+
+  <div class="listing-head">
+    <span class="badge blue">Partner A</span>
+    <span class="badge green">Active</span>
+  </div>
+
+  <div class="listing-img">
+    Image embedding similarity: 0.96
+  </div>
+
+  <h3>Alpine Lodge Munich</h3>
+  <div class="listing-address">Schlierseer Str. 14 · Bavaria · Germany</div>
+
+  <div class="attributes mt">
+
+    <div class="attr">
+      <span>Coordinates</span>
+      47.7378, 11.8592
+    </div>
+
+    <div class="attr">
+      <span>Bedrooms</span>
+      3
+    </div>
+
+    <div class="attr">
+      <span>Guests</span>
+      6
+    </div>
+
+    <div class="attr">
+      <span>Amenities</span>
+      Sauna · Wi-Fi · Parking
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="match-center">
+
+  <div class="score-ring">
+    <strong>94%</strong>
+  </div>
+
+  <div class="match-line"></div>
+
+  <div class="decision" id="matchDecision">
+    MERGE
+  </div>
+
+</div>
+
+
+<div class="card listing">
+
+  <div class="listing-head">
+    <span class="badge orange">Partner B</span>
+    <span class="badge green">Active</span>
+  </div>
+
+  <div class="listing-img">
+    Image embedding similarity: 0.96
+  </div>
+
+  <h3>Alpine Holiday Home near Munich</h3>
+  <div class="listing-address">Schlierseer Straße 14 · Bayern · DE</div>
+
+  <div class="attributes mt">
+
+    <div class="attr">
+      <span>Coordinates</span>
+      47.7379, 11.8590
+    </div>
+
+    <div class="attr">
+      <span>Bedrooms</span>
+      3
+    </div>
+
+    <div class="attr">
+      <span>Guests</span>
+      6
+    </div>
+
+    <div class="attr">
+      <span>Amenities</span>
+      Sauna · Internet · Car park
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<div class="card mt">
+
+<div class="card-title card-pad" style="margin:0">
+  <h3>Match feature contribution</h3>
+  <span>Example candidate pair</span>
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+  <th>Signal</th>
+  <th>Similarity</th>
+  <th>Weight</th>
+  <th>Contribution</th>
+  <th>Interpretation</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Geo coordinates</td>
+<td><strong>99.8%</strong></td>
+<td>30%</td>
+<td>29.9</td>
+<td><span class="badge green">Strong match</span></td>
+</tr>
+
+<tr>
+<td>Image embeddings</td>
+<td><strong>96.0%</strong></td>
+<td>25%</td>
+<td>24.0</td>
+<td><span class="badge green">Strong match</span></td>
+</tr>
+
+<tr>
+<td>Name similarity</td>
+<td><strong>81.0%</strong></td>
+<td>15%</td>
+<td>12.2</td>
+<td><span class="badge blue">Supporting</span></td>
+</tr>
+
+<tr>
+<td>Capacity / rooms</td>
+<td><strong>100%</strong></td>
+<td>15%</td>
+<td>15.0</td>
+<td><span class="badge green">Exact</span></td>
+</tr>
+
+<tr>
+<td>Amenities</td>
+<td><strong>86%</strong></td>
+<td>10%</td>
+<td>8.6</td>
+<td><span class="badge blue">Supporting</span></td>
+</tr>
+
+<tr>
+<td>Address normalization</td>
+<td><strong>91%</strong></td>
+<td>5%</td>
+<td>4.6</td>
+<td><span class="badge green">Strong match</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ====================================================== -->
+<!-- QUALITY -->
+<!-- ====================================================== -->
+
+<section class="page" id="quality">
+
+<div class="section-head">
+  <div class="eyebrow">Catalog Governance</div>
+  <h1>Listing Quality Score</h1>
+  <p>
+    A shared quality framework gives Product, Commercial and supply partners one
+    definition of healthy inventory. The score prioritizes improvements according
+    to their expected traveler and marketplace impact.
+  </p>
+</div>
+
+
+<div class="grid grid-2">
+
+<div class="card card-pad">
+
+  <div class="card-title">
+    <h3>Marketplace Quality Score</h3>
+    <span>Weighted index · 0–100</span>
+  </div>
+
+  <div class="score-card">
+
+    <div class="big-score">
+      <div>
+        <strong>82</strong>
+        <small>/ 100</small>
+      </div>
+    </div>
+
+    <div class="quality-components">
+
+      <div class="quality-row">
+        <span>Content completeness</span>
+        <div class="progress"><span style="width:88%"></span></div>
+        <strong>88</strong>
+      </div>
+
+      <div class="quality-row">
+        <span>Location accuracy</span>
+        <div class="progress"><span style="width:93%"></span></div>
+        <strong>93</strong>
+      </div>
+
+      <div class="quality-row">
+        <span>Image quality</span>
+        <div class="progress"><span style="width:84%"></span></div>
+        <strong>84</strong>
+      </div>
+
+      <div class="quality-row">
+        <span>Availability freshness</span>
+        <div class="progress"><span style="width:74%"></span></div>
+        <strong>74</strong>
+      </div>
+
+      <div class="quality-row">
+        <span>Price competitiveness</span>
+        <div class="progress"><span style="width:77%"></span></div>
+        <strong>77</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="card card-pad">
+
+<div class="card-title">
+  <h3>Proposed scoring model</h3>
+  <span>Product framework</span>
+</div>
+
+<table style="min-width:0">
+
+<tr>
+<td><strong>Completeness</strong></td>
+<td>25%</td>
+<td>Attributes, amenities, descriptions</td>
+</tr>
+
+<tr>
+<td><strong>Accuracy</strong></td>
+<td>25%</td>
+<td>Location, capacity, property metadata</td>
+</tr>
+
+<tr>
+<td><strong>Freshness</strong></td>
+<td>20%</td>
+<td>Availability and price updates</td>
+</tr>
+
+<tr>
+<td><strong>Visual Quality</strong></td>
+<td>15%</td>
+<td>Image quantity, resolution, relevance</td>
+</tr>
+
+<tr>
+<td><strong>Competitiveness</strong></td>
+<td>15%</td>
+<td>Rate quality and booking conditions</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="card mt">
+
+<div class="card-title card-pad" style="margin:0">
+  <h3>Partner Quality Benchmark</h3>
+  <span>Where should Partner Integrations focus?</span>
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Partner</th>
+<th>Listings</th>
+<th>Quality Score</th>
+<th>Duplicate Rate</th>
+<th>Freshness</th>
+<th>AI Ready</th>
+<th>Priority</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><div class="partner"><span class="partner-logo">A</span><strong>Partner Alpha</strong></div></td>
+<td>2.8M</td>
+<td><strong>91</strong></td>
+<td>2.1%</td>
+<td>94%</td>
+<td>89%</td>
+<td><span class="badge green">Healthy</span></td>
+</tr>
+
+<tr>
+<td><div class="partner"><span class="partner-logo">B</span><strong>Partner Beta</strong></div></td>
+<td>1.9M</td>
+<td><strong>84</strong></td>
+<td>4.2%</td>
+<td>82%</td>
+<td>75%</td>
+<td><span class="badge blue">Monitor</span></td>
+</tr>
+
+<tr>
+<td><div class="partner"><span class="partner-logo">C</span><strong>Partner Gamma</strong></div></td>
+<td>1.3M</td>
+<td><strong>68</strong></td>
+<td>9.8%</td>
+<td>61%</td>
+<td>42%</td>
+<td><span class="badge red">Action</span></td>
+</tr>
+
+<tr>
+<td><div class="partner"><span class="partner-logo">D</span><strong>Partner Delta</strong></div></td>
+<td>870K</td>
+<td><strong>73</strong></td>
+<td>7.1%</td>
+<td>69%</td>
+<td>58%</td>
+<td><span class="badge orange">Improve</span></td>
+</tr>
+
+<tr>
+<td><div class="partner"><span class="partner-logo">E</span><strong>Partner Epsilon</strong></div></td>
+<td>640K</td>
+<td><strong>88</strong></td>
+<td>3.0%</td>
+<td>91%</td>
+<td>83%</td>
+<td><span class="badge green">Healthy</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ====================================================== -->
+<!-- IMPACT -->
+<!-- ====================================================== -->
+
+<section class="page" id="impact">
+
+<div class="section-head">
+  <div class="eyebrow">From Infrastructure to Revenue</div>
+  <h1>Marketplace Impact</h1>
+  <p>
+    Infrastructure work becomes strategically valuable when its downstream impact
+    is measurable. This framework connects catalog improvements to traveler behavior,
+    booking conversion and commercial outcomes.
+  </p>
+</div>
+
+
+<div class="grid grid-4">
+
+<div class="card metric">
+<div class="metric-label">Search CTR</div>
+<div class="metric-value">18.7%</div>
+<div class="metric-foot"><span class="up">+5.1%</span> relative uplift</div>
+</div>
+
+<div class="card metric">
+<div class="metric-label">Listing → Booking CVR</div>
+<div class="metric-value">3.42%</div>
+<div class="metric-foot"><span class="up">+7.2%</span> relative uplift</div>
+</div>
+
+<div class="card metric">
+<div class="metric-label">Duplicate Exposure</div>
+<div class="metric-value">4.8%</div>
+<div class="metric-foot"><span class="up">−22%</span> relative reduction</div>
+</div>
+
+<div class="card metric">
+<div class="metric-label">Projected Annual Impact</div>
+<div class="metric-value">€8.4M</div>
+<div class="metric-foot">Illustrative incremental GBV</div>
+</div>
+
+</div>
+
+
+<div class="grid grid-2 mt">
+
+<div class="card card-pad">
+
+<div class="card-title">
+<h3>Infrastructure → business value</h3>
+<span>Impact chain</span>
+</div>
+
+<div class="funnel">
+
+<div class="funnel-step" style="width:100%">
+<strong>Cleaner Partner Feeds</strong>
+Higher completeness + freshness
+</div>
+
+<div>↓</div>
+
+<div class="funnel-step" style="width:88%">
+<strong>Better Entity Resolution</strong>
+Fewer duplicates and conflicting attributes
+</div>
+
+<div>↓</div>
+
+<div class="funnel-step" style="width:76%">
+<strong>Better Search & Ranking</strong>
+More relevant traveler results
+</div>
+
+<div>↓</div>
+
+<div class="funnel-step" style="width:64%">
+<strong>Higher Engagement</strong>
+CTR + qualified listing views
+</div>
+
+<div>↓</div>
+
+<div class="funnel-step" style="width:52%">
+<strong>More Bookings</strong>
+Conversion + marketplace value
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card card-pad">
+
+<div class="card-title">
+<h3>A/B Test · Deduplicated ranking</h3>
+<span>Illustrative experiment</span>
+</div>
+
+<p style="font-size:12px;color:var(--muted);line-height:1.6">
+<strong>Hypothesis:</strong> reducing duplicate property exposure in the first
+20 search results increases discovery diversity and booking conversion.
+</p>
+
+<div class="ab-grid mt">
+
+<div class="variant">
+<h4>Control</h4>
+<div class="variant-number">3.19%</div>
+<small>Booking conversion</small>
+
+<hr style="border:0;border-top:1px solid var(--border);margin:15px 0">
+
+<small>Sessions</small>
+<strong style="display:block;margin-top:4px">512,420</strong>
+</div>
+
+<div class="variant treatment">
+<h4>Treatment</h4>
+<div class="variant-number">3.42%</div>
+<small>Booking conversion</small>
+
+<hr style="border:0;border-top:1px solid var(--border);margin:15px 0">
+
+<small>Sessions</small>
+<strong style="display:block;margin-top:4px">511,870</strong>
+</div>
+
+</div>
+
+<div style="margin-top:16px;padding:13px;background:#ecfaf4;border-radius:9px;font-size:11px;color:#187552">
+<strong>+7.2% relative uplift</strong> · Illustrative result · p &lt; 0.05
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ====================================================== -->
+<!-- AI -->
+<!-- ====================================================== -->
+
+<section class="page" id="ai">
+
+<div class="section-head">
+<div class="eyebrow">Post-Search Discovery</div>
+<h1>AI-Ready Inventory</h1>
+<p>
+Conversational discovery changes the catalog requirement: attributes that humans
+can infer from text must become reliable, normalized and machine-readable so that
+AI systems can retrieve the right inventory with confidence.
+</p>
+</div>
+
+
+<div class="card card-pad">
+
+<div class="card-title">
+<h3>Conversational accommodation discovery</h3>
+<span>Interactive prototype</span>
+</div>
+
+<div class="search-box">
+<input id="aiQuery" value="Pet-friendly cabin near Munich with sauna, mountain view and EV charger under €220/night">
+<button class="btn" onclick="runAISearch()">Analyze Query</button>
+</div>
+
+</div>
+
+
+<div class="ai-flow mt">
+
+<div class="ai-box">
+
+<h4>1 · Natural language intent</h4>
+
+<p id="queryDisplay" style="font-size:11px;color:var(--muted);line-height:1.6">
+Pet-friendly cabin near Munich with sauna, mountain view and EV charger under €220/night
+</p>
+
+</div>
+
+<div class="ai-arrow">→</div>
+
+<div class="ai-box">
+
+<h4>2 · Structured attributes</h4>
+
+<div id="tokens">
+<span class="token">property_type: cabin</span>
+<span class="token">pet_friendly: true</span>
+<span class="token">sauna: true</span>
+<span class="token">ev_charger: true</span>
+<span class="token">mountain_view: true</span>
+<span class="token">max_price: 220 EUR</span>
+<span class="token">location: Munich area</span>
+</div>
+
+</div>
+
+<div class="ai-arrow">→</div>
+
+<div class="ai-box">
+
+<h4>3 · Catalog retrieval</h4>
+
+<div style="font-size:11px;color:var(--muted)">
+Eligible inventory
+</div>
+
+<div style="font-size:27px;font-weight:800;margin:7px 0">
+1,284
+</div>
+
+<span class="badge green">92% attribute confidence</span>
+
+</div>
+
+</div>
+
+
+<div class="grid grid-2 mt">
+
+<div class="card card-pad">
+
+<div class="card-title">
+<h3>Top structured result</h3>
+<span>AI relevance score</span>
+</div>
+
+<div class="result-card">
+
+<div class="result-img"></div>
+
+<div>
+<h4>Bavarian Mountain Cabin</h4>
+<p>6 guests · 3 bedrooms · Sauna · Pets · EV charging</p>
+</div>
+
+<div>
+<strong>97%</strong>
+<div style="font-size:9px;color:var(--muted)">match</div>
+</div>
+
+</div>
+
+
+<div class="result-card">
+
+<div class="result-img"></div>
+
+<div>
+<h4>Alpine Forest Retreat</h4>
+<p>4 guests · 2 bedrooms · Sauna · Pets · Mountain view</p>
+</div>
+
+<div>
+<strong>94%</strong>
+<div style="font-size:9px;color:var(--muted)">match</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card card-pad">
+
+<div class="card-title">
+<h3>AI readiness framework</h3>
+<span>Required catalog capabilities</span>
+</div>
+
+<div class="health-row">
+<span>Normalized amenities</span>
+<div class="progress"><span style="width:84%"></span></div>
+<strong>84%</strong>
+</div>
+
+<div class="health-row">
+<span>Semantic descriptions</span>
+<div class="progress"><span style="width:68%"></span></div>
+<strong>68%</strong>
+</div>
+
+<div class="health-row">
+<span>Property taxonomy</span>
+<div class="progress"><span style="width:91%"></span></div>
+<strong>91%</strong>
+</div>
+
+<div class="health-row">
+<span>Geo entities</span>
+<div class="progress"><span style="width:96%"></span></div>
+<strong>96%</strong>
+</div>
+
+<div class="health-row">
+<span>Structured pricing</span>
+<div class="progress"><span style="width:79%"></span></div>
+<strong>79%</strong>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ====================================================== -->
+<!-- SQL -->
+<!-- ====================================================== -->
+
+<section class="page" id="sql">
+
+<div class="section-head">
+<div class="eyebrow">Hands-On Product Analytics</div>
+<h1>SQL Analytics</h1>
+<p>
+The product owner does not need to build the matching model, but should be able
+to independently investigate data quality, evaluate model performance and challenge
+assumptions with data.
+</p>
+</div>
+
+
+<div class="grid grid-2">
+
+<div class="code">
+
+<div class="code-head">
+<span>duplicate_rate_by_partner.sql</span>
+<span>BigQuery</span>
+</div>
+
+<pre><span class="sql-blue">SELECT</span>
+  partner_name,
+  <span class="sql-purple">COUNT</span>(*) <span class="sql-blue">AS</span> total_listings,
+  <span class="sql-purple">COUNTIF</span>(
+    canonical_property_id IS NOT NULL
+  ) <span class="sql-blue">AS</span> matched_listings,
+
+  <span class="sql-purple">ROUND</span>(
+    <span class="sql-purple">COUNTIF</span>(duplicate_flag = <span class="sql-green">TRUE</span>)
+    / <span class="sql-purple">COUNT</span>(*) * 100,
+    2
+  ) <span class="sql-blue">AS</span> duplicate_rate
+
+<span class="sql-blue">FROM</span>
+  marketplace.listings
+
+<span class="sql-blue">WHERE</span>
+  listing_status = <span class="sql-yellow">'ACTIVE'</span>
+
+<span class="sql-blue">GROUP BY</span>
+  partner_name
+
+<span class="sql-blue">ORDER BY</span>
+  duplicate_rate <span class="sql-blue">DESC</span>;</pre>
+
+</div>
+
+
+<div class="code">
+
+<div class="code-head">
+<span>quality_vs_conversion.sql</span>
+<span>BigQuery</span>
+</div>
+
+<pre><span class="sql-blue">WITH</span> listing_performance <span class="sql-blue">AS</span> (
+
+  <span class="sql-blue">SELECT</span>
+    listing_id,
+    quality_score,
+    <span class="sql-purple">COUNT</span>(DISTINCT session_id)
+      <span class="sql-blue">AS</span> listing_views,
+
+    <span class="sql-purple">COUNTIF</span>(booking_id IS NOT NULL)
+      <span class="sql-blue">AS</span> bookings
+
+  <span class="sql-blue">FROM</span>
+    analytics.listing_sessions
+
+  <span class="sql-blue">GROUP BY</span>
+    listing_id,
+    quality_score
+)
+
+<span class="sql-blue">SELECT</span>
+  <span class="sql-blue">CASE</span>
+    <span class="sql-blue">WHEN</span> quality_score >= 90 <span class="sql-blue">THEN</span> <span class="sql-yellow">'90-100'</span>
+    <span class="sql-blue">WHEN</span> quality_score >= 80 <span class="sql-blue">THEN</span> <span class="sql-yellow">'80-89'</span>
+    <span class="sql-blue">WHEN</span> quality_score >= 70 <span class="sql-blue">THEN</span> <span class="sql-yellow">'70-79'</span>
+    <span class="sql-blue">ELSE</span> <span class="sql-yellow">'Below 70'</span>
+  <span class="sql-blue">END AS</span> quality_band,
+
+  <span class="sql-purple">SUM</span>(bookings)
+  / <span class="sql-purple">SUM</span>(listing_views)
+  <span class="sql-blue">AS</span> conversion_rate
+
+<span class="sql-blue">FROM</span>
+  listing_performance
+
+<span class="sql-blue">GROUP BY</span>
+  quality_band;</pre>
+
+</div>
+
+</div>
+
+
+<div class="card mt">
+
+<div class="card-title card-pad" style="margin:0">
+<h3>Example analytical output</h3>
+<span>Quality vs. conversion</span>
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Quality Band</th>
+<th>Listings</th>
+<th>Avg CTR</th>
+<th>Booking CVR</th>
+<th>Relative CVR</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><span class="badge green">90–100</span></td>
+<td>3.1M</td>
+<td>21.4%</td>
+<td><strong>3.81%</strong></td>
+<td><span class="up">+27%</span></td>
+</tr>
+
+<tr>
+<td><span class="badge blue">80–89</span></td>
+<td>5.6M</td>
+<td>18.9%</td>
+<td><strong>3.44%</strong></td>
+<td><span class="up">+15%</span></td>
+</tr>
+
+<tr>
+<td><span class="badge orange">70–79</span></td>
+<td>4.2M</td>
+<td>16.8%</td>
+<td><strong>3.01%</strong></td>
+<td>Baseline</td>
+</tr>
+
+<tr>
+<td><span class="badge red">&lt;70</span></td>
+<td>2.5M</td>
+<td>13.2%</td>
+<td><strong>2.41%</strong></td>
+<td><span class="down">−20%</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ====================================================== -->
+<!-- ROADMAP -->
+<!-- ====================================================== -->
+
+<section class="page" id="roadmap">
+
+<div class="section-head">
+<div class="eyebrow">Product Strategy</div>
+<h1>First 90 Days</h1>
+<p>
+The first quarter prioritizes observability before optimization, then converts
+the strongest infrastructure opportunities into measurable marketplace outcomes.
+</p>
+</div>
+
+
+<div class="roadmap">
+
+<div class="roadmap-col">
+
+<div class="roadmap-head">
+<span>Days 1–30</span>
+<h3>Observe</h3>
+</div>
+
+<div class="roadmap-body">
+
+<div class="road-item">
+<strong>Catalog health baseline</strong>
+<p>Establish one trusted view of duplicates, completeness, freshness and partner quality.</p>
+<div class="tags">
+<span class="tag">DATA</span>
+<span class="tag">P0</span>
+</div>
+</div>
+
+<div class="road-item">
+<strong>Matching error taxonomy</strong>
+<p>Separate false merges, missed matches and ambiguous property/unit relationships.</p>
+<div class="tags">
+<span class="tag">ML</span>
+<span class="tag">P0</span>
+</div>
+</div>
+
+<div class="road-item">
+<strong>Stakeholder discovery</strong>
+<p>Map downstream dependencies across Search, Integrations, Commercial and Data Science.</p>
+<div class="tags">
+<span class="tag">PRODUCT</span>
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="roadmap-col">
+
+<div class="roadmap-head">
+<span>Days 31–60</span>
+<h3>Improve</h3>
+</div>
+
+<div class="roadmap-body">
+
+<div class="road-item">
+<strong>Matching threshold experiment</strong>
+<p>Test precision/recall trade-offs against search diversity and conversion guardrails.</p>
+<div class="tags">
+<span class="tag">EXPERIMENT</span>
+<span class="tag">P0</span>
+</div>
+</div>
+
+<div class="road-item">
+<strong>Quality Score v1</strong>
+<p>Launch weighted quality framework and partner-level diagnostics.</p>
+<div class="tags">
+<span class="tag">QUALITY</span>
+<span class="tag">P0</span>
+</div>
+</div>
+
+<div class="road-item">
+<strong>Partner feedback loop</strong>
+<p>Turn recurring feed issues into actionable partner-level recommendations.</p>
+<div class="tags">
+<span class="tag">SUPPLY</span>
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="roadmap-col">
+
+<div class="roadmap-head">
+<span>Days 61–90</span>
+<h3>Scale</h3>
+</div>
+
+<div class="roadmap-body">
+
+<div class="road-item">
+<strong>AI readiness schema</strong>
+<p>Define structured fields required for conversational and external AI discovery.</p>
+<div class="tags">
+<span class="tag">AI</span>
+<span class="tag">P1</span>
+</div>
+</div>
+
+<div class="road-item">
+<strong>Automated quality enforcement</strong>
+<p>Introduce validation and monitoring before low-quality inventory reaches discovery surfaces.</p>
+<div class="tags">
+<span class="tag">PLATFORM</span>
+</div>
+</div>
+
+<div class="road-item">
+<strong>Quarterly marketplace roadmap</strong>
+<p>Prioritize next bets using measured downstream business impact rather than infrastructure output alone.</p>
+<div class="tags">
+<span class="tag">STRATEGY</span>
+<span class="tag">C-LEVEL</span>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ====================================================== -->
+<!-- DECISIONS -->
+<!-- ====================================================== -->
+
+<section class="page" id="decisions">
+
+<div class="section-head">
+<div class="eyebrow">Product Judgment</div>
+<h1>Decisions & Trade-offs</h1>
+<p>
+Marketplace infrastructure rarely has a universally correct answer. Product ownership
+means making explicit trade-offs, defining guardrails and connecting technical decisions
+to traveler and commercial outcomes.
+</p>
+</div>
+
+
+<div class="card decision-card">
+
+<h3>01 · Should matching optimize for precision or recall?</h3>
+
+<p>
+A false merge can combine two genuinely different accommodations, potentially
+showing incorrect prices, availability or content. A missed match creates duplicate
+inventory and reduces search diversity. The cost of the two errors is not symmetric.
+</p>
+
+<div class="decision-grid">
+
+<div class="decision-box">
+<span>Decision</span>
+<strong>Bias toward precision for automatic merges.</strong>
+</div>
+
+<div class="decision-box">
+<span>Guardrail</span>
+<strong>Ambiguous candidates enter a secondary review or confidence layer.</strong>
+</div>
+
+<div class="decision-box">
+<span>Measure</span>
+<strong>False merge rate + duplicate exposure + booking CVR.</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card decision-card mt">
+
+<h3>02 · Should every missing attribute reduce Quality Score equally?</h3>
+
+<p>
+No. Missing Wi-Fi information and missing decorative description text have very
+different traveler impact. The score should reflect expected downstream value rather
+than treating completeness as a simple field count.
+</p>
+
+<div class="decision-grid">
+
+<div class="decision-box">
+<span>Decision</span>
+<strong>Weight attributes according to traveler relevance and observed conversion impact.</strong>
+</div>
+
+<div class="decision-box">
+<span>Guardrail</span>
+<strong>Prevent high commercial performance from hiding inaccurate critical fields.</strong>
+</div>
+
+<div class="decision-box">
+<span>Measure</span>
+<strong>Quality dimension vs. CTR, conversion and customer issues.</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card decision-card mt">
+
+<h3>03 · Build AI-specific inventory or improve the core data model?</h3>
+
+<p>
+Creating a parallel AI catalog would accelerate short-term experimentation but
+introduce another source of truth. A stronger canonical accommodation model creates
+leverage across search, APIs, LLM discovery and future distribution channels.
+</p>
+
+<div class="decision-grid">
+
+<div class="decision-box">
+<span>Decision</span>
+<strong>Improve the canonical model first; expose AI-specific representations downstream.</strong>
+</div>
+
+<div class="decision-box">
+<span>Guardrail</span>
+<strong>Do not delay experiments that can validate AI discovery demand cheaply.</strong>
+</div>
+
+<div class="decision-box">
+<span>Measure</span>
+<strong>Structured coverage + retrieval accuracy + distribution reach.</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="hero mt-lg">
+
+<div class="eyebrow">Product Thesis</div>
+
+<h1 style="font-size:30px">
+Marketplace data infrastructure is not a backend cost center.
+It is a growth product.
+</h1>
+
+<p>
+Better entity resolution improves discovery. Better catalog quality increases traveler
+confidence. Better structured data expands distribution. The product owner's job is to
+connect those infrastructure improvements to measurable marketplace outcomes.
+</p>
+
+</div>
+
+<div style="text-align:center;color:var(--muted);font-size:10px;margin-top:25px;line-height:1.7">
+Independent product case study · All marketplace figures and experiment results are synthetic and illustrative.<br>
+Created for portfolio and interview purposes. Not affiliated with HomeToGo.
+</div>
+
+</section>
+
+
+</div>
+</main>
+</div>
+
+
+<script>
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const navItems = document.querySelectorAll(".nav-item");
+const pages = document.querySelectorAll(".page");
+const pageName = document.getElementById("pageName");
+
+const pageNames = {
+  overview:"Executive Overview",
+  dedup:"Deduplication Lab",
+  quality:"Quality Score",
+  impact:"Marketplace Impact",
+  ai:"AI Readiness",
+  sql:"SQL Analytics",
+  roadmap:"90-Day Roadmap",
+  decisions:"Product Decisions"
+};
+
+navItems.forEach(item => {
+
+  item.addEventListener("click", () => {
+
+    const target = item.dataset.page;
+
+    navItems.forEach(n => n.classList.remove("active"));
+    item.classList.add("active");
+
+    pages.forEach(p => p.classList.remove("active"));
+
+    document.getElementById(target).classList.add("active");
+
+    pageName.textContent = pageNames[target];
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  });
+
+});
+
+
+/* =========================================================
+   QUALITY CHART
+========================================================= */
+
+const qualityData = [
+  {month:"Feb", value:68},
+  {month:"Mar", value:70},
+  {month:"Apr", value:72},
+  {month:"May", value:73},
+  {month:"Jun", value:76},
+  {month:"Jul", value:78},
+  {month:"Aug", value:80},
+  {month:"Sep", value:82}
+];
+
+const chart = document.getElementById("qualityChart");
+
+qualityData.forEach(item => {
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "bar-wrap";
+
+  const bar = document.createElement("div");
+  bar.className = "bar";
+
+  const normalizedHeight =
+    ((item.value - 60) / 30) * 100;
+
+  bar.style.height =
+    Math.max(20, normalizedHeight) + "%";
+
+  const value = document.createElement("div");
+  value.className = "bar-value";
+  value.textContent = item.value;
+
+  bar.appendChild(value);
+
+  const label = document.createElement("div");
+  label.className = "bar-label";
+  label.textContent = item.month;
+
+  wrapper.appendChild(bar);
+  wrapper.appendChild(label);
+
+  chart.appendChild(wrapper);
+
+});
+
+
+/* =========================================================
+   DEDUPLICATION MODEL SIMULATION
+========================================================= */
+
+const slider = document.getElementById("thresholdSlider");
+
+const thresholdValue =
+  document.getElementById("thresholdValue");
+
+const precisionEl =
+  document.getElementById("precision");
+
+const recallEl =
+  document.getElementById("recall");
+
+const falseMergeEl =
+  document.getElementById("falseMerge");
+
+const unresolvedEl =
+  document.getElementById("unresolved");
+
+const matchDecision =
+  document.getElementById("matchDecision");
+
+
+function updateThreshold(){
+
+  const threshold =
+    Number(slider.value);
+
+  thresholdValue.textContent =
+    (threshold / 100).toFixed(2);
+
+  /*
+    Illustrative relationship:
+    Increasing threshold:
+    - precision increases
+    - recall decreases
+    - false merges decrease
+    - unresolved duplicates increase
+  */
+
+  const precision =
+    84 + ((threshold - 60) * 0.41);
+
+  const recall =
+    98 - ((threshold - 60) * 0.40);
+
+  const falseMerge =
+    Math.max(
+      0.2,
+      6.8 - ((threshold - 60) * 0.20)
+    );
+
+  const unresolved =
+    1.2 + ((threshold - 60) * 0.145);
+
+
+  precisionEl.textContent =
+    precision.toFixed(1) + "%";
+
+  recallEl.textContent =
+    recall.toFixed(1) + "%";
+
+  falseMergeEl.textContent =
+    falseMerge.toFixed(1) + "%";
+
+  unresolvedEl.textContent =
+    unresolved.toFixed(1) + "%";
+
+
+  const candidateScore = 94;
+
+  if(candidateScore >= threshold){
+
+    matchDecision.textContent =
+      "MERGE";
+
+    matchDecision.style.color =
+      "var(--green)";
+
+  } else {
+
+    matchDecision.textContent =
+      "KEEP SEPARATE";
+
+    matchDecision.style.color =
+      "var(--red)";
+
+  }
+
+}
+
+slider.addEventListener(
+  "input",
+  updateThreshold
+);
+
+updateThreshold();
+
+
+/* =========================================================
+   AI QUERY PROTOTYPE
+========================================================= */
+
+function runAISearch(){
+
+  const input =
+    document.getElementById("aiQuery");
+
+  const display =
+    document.getElementById("queryDisplay");
+
+  const tokens =
+    document.getElementById("tokens");
+
+  const query =
+    input.value.trim();
+
+  if(!query) return;
+
+  display.textContent = query;
+
+  const q =
+    query.toLowerCase();
+
+  const attributes = [];
+
+
+  if(
+    q.includes("cabin") ||
+    q.includes("chalet")
+  ){
+    attributes.push(
+      ["property_type","cabin"]
+    );
+  }
+
+
+  if(
+    q.includes("pet") ||
+    q.includes("dog")
+  ){
+    attributes.push(
+      ["pet_friendly","true"]
+    );
+  }
+
+
+  if(q.includes("sauna")){
+    attributes.push(
+      ["sauna","true"]
+    );
+  }
+
+
+  if(
+    q.includes("ev") ||
+    q.includes("electric")
+  ){
+    attributes.push(
+      ["ev_charger","true"]
+    );
+  }
+
+
+  if(
+    q.includes("mountain")
+  ){
+    attributes.push(
+      ["mountain_view","true"]
+    );
+  }
+
+
+  if(
+    q.includes("munich")
+  ){
+    attributes.push(
+      ["location","Munich area"]
+    );
+  }
+
+
+  const priceMatch =
+    q.match(/(?:€|eur\s*)(\d+)/i) ||
+    q.match(/(\d+)\s*(?:€|eur)/i);
+
+
+  if(priceMatch){
+
+    attributes.push(
+      ["max_price",
+       priceMatch[1] + " EUR"]
+    );
+
+  }
+
+
+  if(attributes.length === 0){
+
+    attributes.push(
+      ["intent",
+       "semantic accommodation search"]
+    );
+
+  }
+
+
+  tokens.innerHTML =
+    attributes
+      .map(a =>
+        `<span class="token">${a[0]}: ${a[1]}</span>`
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   KEYBOARD UX
+========================================================= */
+
+document
+.getElementById("aiQuery")
+.addEventListener("keydown",function(e){
+
+  if(e.key === "Enter"){
+    runAISearch();
+  }
+
+});
+
+</script>
+
+</body>
+</html>
