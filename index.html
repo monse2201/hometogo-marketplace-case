@@ -55,9 +55,22 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
 .contact-panel{background:linear-gradient(135deg,#172554,#101a37);color:#fff;border-radius:16px;padding:27px}
 .contact-panel h2{margin:8px 0 9px;font-size:27px}.contact-panel p{margin:0;color:#c5cee5;font-size:12px;line-height:1.7;max-width:700px}
 .contact-panel .eyebrow{color:#aebeff}
-.visual-placeholder{position:relative;overflow:hidden}
-.visual-placeholder:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 28% 32%,rgba(255,255,255,.42),transparent 13%),radial-gradient(circle at 72% 42%,rgba(255,255,255,.24),transparent 18%),linear-gradient(145deg,transparent 46%,rgba(255,255,255,.18) 47%,transparent 49%)}
-.visual-placeholder:after{content:"Accommodation visual · conceptual";position:absolute;left:12px;bottom:11px;font-size:9px;color:#fff;font-weight:750;letter-spacing:.3px}
+.visual-placeholder{position:relative;overflow:hidden;background:
+linear-gradient(180deg,rgba(70,110,165,.10),rgba(17,24,39,.12)),
+linear-gradient(155deg,#bcd5ec 0 38%,#7fa0bd 38% 40%,#d8e6d3 40% 52%,#527454 52% 58%,#263d2c 58% 100%)}
+.visual-placeholder:before{content:"";position:absolute;width:58%;height:58%;right:8%;bottom:9%;border-radius:5px 5px 2px 2px;background:
+linear-gradient(90deg,transparent 0 8%,rgba(24,32,38,.92) 8% 12%,transparent 12% 28%,rgba(24,32,38,.92) 28% 32%,transparent 32% 48%,rgba(24,32,38,.92) 48% 52%,transparent 52% 68%,rgba(24,32,38,.92) 68% 72%,transparent 72% 88%,rgba(24,32,38,.92) 88% 92%,transparent 92%),
+linear-gradient(180deg,rgba(233,224,201,.96) 0 18%,#34485a 18% 23%,rgba(222,235,239,.90) 23% 78%,#8b674a 78% 100%);
+box-shadow:0 8px 18px rgba(17,24,39,.22)}
+.visual-placeholder:after{content:"";position:absolute;width:68%;height:28%;right:3%;bottom:60%;background:#473b32;clip-path:polygon(8% 100%,48% 0,100% 100%);filter:drop-shadow(0 3px 2px rgba(0,0,0,.15))}
+.listing-img .image-label{position:absolute;left:12px;bottom:10px;z-index:4;background:rgba(16,26,55,.78);color:white;padding:6px 8px;border-radius:7px;font-size:9px}
+.hover-tip{position:relative}.hover-tip[data-tip]:hover:after{content:attr(data-tip);position:absolute;z-index:100;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:max-content;max-width:230px;padding:8px 10px;background:#101a37;color:#fff;border-radius:7px;font-size:9px;line-height:1.4;box-shadow:0 8px 24px rgba(16,24,40,.2);pointer-events:none}
+.bar{cursor:help}.bar:hover{filter:brightness(.96);transform:translateY(-2px)}
+.run-panel{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;background:#f8faff;border:1px solid #dfe5ff;border-radius:11px;margin-top:14px}
+.run-panel p{margin:0;color:var(--muted);font-size:10px;line-height:1.5}.run-status{font-size:10px;font-weight:800;color:var(--green);min-width:125px;text-align:right}
+.btn.running{opacity:.7;pointer-events:none}
+.pulse{animation:pulse .45s ease}@keyframes pulse{50%{transform:scale(1.025);box-shadow:0 7px 25px rgba(49,87,213,.13)}}
+
 @media(max-width:1150px){.grid-4{grid-template-columns:repeat(2,1fr)}.tradeoffs{grid-template-columns:repeat(3,1fr)}.ai-flow{grid-template-columns:1fr}.ai-arrow{transform:rotate(90deg)}.compare{grid-template-columns:1fr}.match-center{flex-direction:row}.match-line{width:70px;height:1px}.profile{grid-template-columns:1fr}}
 @media(max-width:850px){.layout{display:block}.sidebar{display:none}.main{grid-column:auto}.content{padding:19px}.topbar{padding:0 19px}.grid-4,.grid-3,.grid-2,.roadmap{grid-template-columns:1fr}.hero{padding:27px}.hero h1{font-size:29px}.tradeoffs{grid-template-columns:1fr 1fr}.ab-grid,.decision-grid{grid-template-columns:1fr}.score-card{flex-direction:column}.arch-flow{flex-direction:column}.arch-arrow{transform:rotate(90deg)}.arch-box{width:100%}.surface-row{grid-template-columns:1fr}}
 </style>
@@ -159,13 +172,18 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
   <div class="card-title"><h3>Matching confidence threshold</h3><span>Interactive synthetic model evaluation</span></div>
   <div class="slider-row"><input id="thresholdSlider" type="range" min="60" max="99" value="85"><div class="threshold" id="thresholdValue">0.85</div></div>
   <div class="tradeoffs">
-    <div class="trade"><small>Precision</small><strong id="precision">94.2%</strong></div>
-    <div class="trade"><small>Recall</small><strong id="recall">88.0%</strong></div>
-    <div class="trade"><small>F1 Score</small><strong id="f1">91.0%</strong></div>
-    <div class="trade"><small>False Merge Rate</small><strong id="falseMerge">1.8%</strong></div>
-    <div class="trade"><small>Missed Matches</small><strong id="unresolved">4.8%</strong></div>
-    <div class="trade"><small>Est. CVR Impact</small><strong id="cvrImpact">+2.9%</strong></div>
+    <div class="trade hover-tip" data-tip="Of all pairs the model merges, how many are truly the same property?"><small>Precision</small><strong id="precision">94.2%</strong></div>
+    <div class="trade hover-tip" data-tip="Of all true duplicate pairs, how many did the model successfully identify?"><small>Recall</small><strong id="recall">88.0%</strong></div>
+    <div class="trade hover-tip" data-tip="Harmonic mean of precision and recall; useful for comparing operating points."><small>F1 Score</small><strong id="f1">91.0%</strong></div>
+    <div class="trade hover-tip" data-tip="Share of merge decisions that incorrectly combine different properties."><small>False Merge Rate</small><strong id="falseMerge">1.8%</strong></div>
+    <div class="trade hover-tip" data-tip="Duplicate pairs left unresolved at the current confidence threshold."><small>Missed Matches</small><strong id="unresolved">4.8%</strong></div>
+    <div class="trade hover-tip" data-tip="Illustrative modeled conversion effect used only to demonstrate product measurement."><small>Est. CVR Impact</small><strong id="cvrImpact">+2.9%</strong></div>
   </div>
+</div>
+<div class="run-panel">
+  <p><strong>Run the matching simulation.</strong><br>Recalculate the synthetic model metrics at the selected threshold and refresh the candidate decision.</p>
+  <button class="btn" id="runModelBtn" onclick="runModel()">▶ Run model</button>
+  <div class="run-status" id="runStatus">Ready</div>
 </div>
 
 <div class="card card-pad mt">
@@ -178,9 +196,9 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
 </div>
 
 <div class="compare mt">
-  <div class="card listing"><div class="listing-head"><span class="badge blue" id="p1">Partner Alpha</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder" id="img1">Image embedding similarity: 0.96</div><h3 id="name1">Alpine Lodge Munich</h3><div class="listing-address" id="addr1">Schlierseer Str. 14 · Bavaria · Germany</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo1">47.7378, 11.8592</b></div><div class="attr"><span>Bedrooms</span><b id="bed1">3</b></div><div class="attr"><span>Guests</span><b id="guest1">6</b></div><div class="attr"><span>Amenities</span><b id="amen1">Sauna · Wi-Fi · Parking</b></div></div></div>
+  <div class="card listing"><div class="listing-head"><span class="badge blue" id="p1">Partner Alpha</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder" id="img1"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name1">Alpine Lodge Munich</h3><div class="listing-address" id="addr1">Schlierseer Str. 14 · Bavaria · Germany</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo1">47.7378, 11.8592</b></div><div class="attr"><span>Bedrooms</span><b id="bed1">3</b></div><div class="attr"><span>Guests</span><b id="guest1">6</b></div><div class="attr"><span>Amenities</span><b id="amen1">Sauna · Wi-Fi · Parking</b></div></div></div>
   <div class="match-center"><div class="score-ring" id="scoreRing"><strong id="candidateScore">94%</strong></div><div class="match-line"></div><div class="decision" id="matchDecision">MERGE</div></div>
-  <div class="card listing"><div class="listing-head"><span class="badge orange" id="p2">Partner Beta</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder" id="img2">Image embedding similarity: 0.96</div><h3 id="name2">Alpine Holiday Home near Munich</h3><div class="listing-address" id="addr2">Schlierseer Straße 14 · Bayern · DE</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo2">47.7379, 11.8590</b></div><div class="attr"><span>Bedrooms</span><b id="bed2">3</b></div><div class="attr"><span>Guests</span><b id="guest2">6</b></div><div class="attr"><span>Amenities</span><b id="amen2">Sauna · Internet · Car park</b></div></div></div>
+  <div class="card listing"><div class="listing-head"><span class="badge orange" id="p2">Partner Beta</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder" id="img2"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name2">Alpine Holiday Home near Munich</h3><div class="listing-address" id="addr2">Schlierseer Straße 14 · Bayern · DE</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo2">47.7379, 11.8590</b></div><div class="attr"><span>Bedrooms</span><b id="bed2">3</b></div><div class="attr"><span>Guests</span><b id="guest2">6</b></div><div class="attr"><span>Amenities</span><b id="amen2">Sauna · Internet · Car park</b></div></div></div>
 </div>
 
 <div class="card mt"><div class="card-title card-pad" style="margin:0"><h3>How I would evaluate matching</h3><span>Beyond a single offline metric</span></div><div class="table-wrap"><table>
@@ -250,7 +268,7 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
 
 <section class="page" id="ai">
 <div class="section-head"><div class="eyebrow">Post-Search Discovery</div><h1>Design the catalog for questions, not just filters.</h1><p>Conversational discovery requires reliable structured attributes and semantic enrichment. The product problem is to make the canonical catalog expressive enough that AI systems can retrieve inventory accurately without creating a separate source of truth.</p></div>
-<div class="card card-pad"><div class="card-title"><h3>Conversational accommodation discovery</h3><span>Interactive front-end prototype</span></div><div class="search-box"><input id="aiQuery" value="Pet-friendly cabin near Munich with sauna, mountain view and EV charger under €220/night"><button class="btn" onclick="runAISearch()">Analyze Query</button></div></div>
+<div class="card card-pad"><div class="card-title"><h3>Conversational accommodation discovery</h3><span>Interactive front-end prototype</span></div><div class="search-box"><input id="aiQuery" value="Pet-friendly cabin near Munich with sauna, mountain view and EV charger under €220/night"><button class="btn" id="aiRunBtn" onclick="runAISearch()">✦ Analyze Query</button></div></div>
 <div class="ai-flow mt">
   <div class="ai-box"><h4>1 · User intent</h4><p id="queryDisplay" style="font-size:10px;color:var(--muted);line-height:1.6">Pet-friendly cabin near Munich with sauna, mountain view and EV charger under €220/night</p></div><div class="ai-arrow">→</div>
   <div class="ai-box"><h4>2 · Entity extraction</h4><div id="tokens"><span class="token">property_type: cabin</span><span class="token">pet_friendly: true</span><span class="token">sauna: true</span><span class="token">ev_charger: true</span><span class="token">mountain_view: true</span><span class="token">max_price: 220 EUR</span><span class="token">location: Munich area</span></div></div><div class="ai-arrow">→</div>
@@ -394,7 +412,7 @@ const pageNames={overview:"Executive Overview",problem:"Problem & Architecture",
 navItems.forEach(item=>item.addEventListener("click",()=>{const target=item.dataset.page;navItems.forEach(n=>n.classList.remove("active"));item.classList.add("active");pages.forEach(p=>p.classList.remove("active"));document.getElementById(target).classList.add("active");pageName.textContent=pageNames[target];window.scrollTo({top:0,behavior:"smooth"})}));
 
 const qualityData=[["Feb",68],["Mar",70],["Apr",72],["May",73],["Jun",76],["Jul",78],["Aug",80],["Sep",82]],chart=document.getElementById("qualityChart");
-qualityData.forEach(([m,v])=>{const w=document.createElement("div");w.className="bar-wrap";const b=document.createElement("div");b.className="bar";b.style.height=Math.max(20,((v-60)/30)*100)+"%";b.innerHTML=`<div class="bar-value">${v}</div>`;const l=document.createElement("div");l.className="bar-label";l.textContent=m;w.append(b,l);chart.appendChild(w)});
+qualityData.forEach(([m,v])=>{const w=document.createElement("div");w.className="bar-wrap";const b=document.createElement("div");b.className="bar hover-tip";b.dataset.tip=`${m} · Synthetic Quality Score: ${v}/100`;b.style.height=Math.max(20,((v-60)/30)*100)+"%";b.innerHTML=`<div class="bar-value">${v}</div>`;const l=document.createElement("div");l.className="bar-label";l.textContent=m;w.append(b,l);chart.appendChild(w)});
 
 const slider=document.getElementById("thresholdSlider"),thresholdValue=document.getElementById("thresholdValue"),precisionEl=document.getElementById("precision"),recallEl=document.getElementById("recall"),f1El=document.getElementById("f1"),falseMergeEl=document.getElementById("falseMerge"),unresolvedEl=document.getElementById("unresolved"),cvrImpactEl=document.getElementById("cvrImpact"),matchDecision=document.getElementById("matchDecision"),candidateScore=document.getElementById("candidateScore"),scoreRing=document.getElementById("scoreRing");
 let currentScore=94;
@@ -417,13 +435,20 @@ function setCase(key){
  const c=cases[key];currentScore=c.score;document.querySelectorAll(".case-tab").forEach(x=>x.classList.toggle("active",x.dataset.case===key));
  const map={p1:c.p1,p2:c.p2,name1:c.n1,name2:c.n2,addr1:c.a1,addr2:c.a2,geo1:c.g1,geo2:c.g2,bed1:c.b1,bed2:c.b2,guest1:c.u1,guest2:c.u2,amen1:c.m1,amen2:c.m2};
  Object.entries(map).forEach(([id,val])=>document.getElementById(id).textContent=val);
- document.getElementById("img1").textContent="Image embedding similarity: "+c.img;document.getElementById("img2").textContent="Image embedding similarity: "+c.img;candidateScore.textContent=c.score+"%";
+ document.getElementById("img1").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;document.getElementById("img2").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;candidateScore.textContent=c.score+"%";
  scoreRing.style.background=`conic-gradient(var(--green) 0 ${c.score}%,#e9edf3 ${c.score}% 100%)`;updateThreshold();
 }
 document.querySelectorAll(".case-tab").forEach(x=>x.addEventListener("click",()=>setCase(x.dataset.case)));setCase("obvious");
 
+function runModel(){
+ const btn=document.getElementById("runModelBtn"),status=document.getElementById("runStatus");
+ btn.classList.add("running");btn.textContent="Running…";status.textContent="Evaluating candidates…";status.style.color="var(--blue)";
+ setTimeout(()=>{updateThreshold();document.querySelector(".control-panel").classList.add("pulse");status.textContent="✓ Simulation complete";status.style.color="var(--green)";btn.classList.remove("running");btn.textContent="▶ Run again";
+ setTimeout(()=>document.querySelector(".control-panel").classList.remove("pulse"),500)},650);
+}
+
 function runAISearch(){
- const input=document.getElementById("aiQuery"),display=document.getElementById("queryDisplay"),tokens=document.getElementById("tokens"),q=input.value.trim();if(!q)return;display.textContent=q;const s=q.toLowerCase(),a=[];
+ const input=document.getElementById("aiQuery"),display=document.getElementById("queryDisplay"),tokens=document.getElementById("tokens"),btn=document.getElementById("aiRunBtn"),q=input.value.trim();if(!q)return;btn.classList.add("running");btn.textContent="Analyzing…";display.textContent=q;const s=q.toLowerCase(),a=[];
  if(s.includes("cabin")||s.includes("chalet"))a.push(["property_type","cabin"]);
  if(s.includes("pet")||s.includes("dog"))a.push(["pet_friendly","true"]);
  if(s.includes("sauna"))a.push(["sauna","true"]);
@@ -432,7 +457,7 @@ function runAISearch(){
  if(s.includes("munich"))a.push(["location","Munich area"]);
  const pm=s.match(/(?:€|eur\s*)(\d+)/i)||s.match(/(\d+)\s*(?:€|eur)/i);if(pm)a.push(["max_price",pm[1]+" EUR"]);
  if(!a.length)a.push(["intent","semantic accommodation search"]);
- tokens.innerHTML=a.map(x=>`<span class="token">${x[0]}: ${x[1]}</span>`).join("");
+ setTimeout(()=>{tokens.innerHTML=a.map(x=>`<span class="token">${x[0]}: ${x[1]}</span>`).join("");btn.classList.remove("running");btn.textContent="✓ Analyzed";setTimeout(()=>btn.textContent="✦ Analyze Query",1200)},500);
 }
 document.getElementById("aiQuery").addEventListener("keydown",e=>{if(e.key==="Enter")runAISearch()});
 </script>
