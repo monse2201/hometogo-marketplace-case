@@ -47,6 +47,17 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
 .roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.roadmap-col{border:1px solid var(--border);border-radius:12px;background:#fff;overflow:hidden}.roadmap-head{padding:17px;border-bottom:1px solid var(--border)}.roadmap-head span{color:var(--blue);font-size:9px;font-weight:900;text-transform:uppercase}.roadmap-head h3{margin:5px 0 0}.roadmap-body{padding:12px}.road-item{border:1px solid var(--border);border-radius:9px;padding:12px;margin-bottom:9px}.road-item:last-child{margin-bottom:0}.road-item strong{font-size:11px;display:block}.road-item p{font-size:9px;color:var(--muted);line-height:1.5;margin:6px 0 9px}.tags{display:flex;gap:5px;flex-wrap:wrap}.tag{padding:4px 6px;background:#f1f3f7;color:#667085;font-size:8px;border-radius:5px}
 .decision-card{padding:21px;border-left:4px solid var(--blue)}.decision-card h3{margin:0 0 8px}.decision-card p{color:var(--muted);font-size:11px;line-height:1.65}.decision-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin-top:15px}.decision-box{padding:12px;background:var(--surface2);border-radius:8px}.decision-box span{display:block;color:var(--muted);font-size:8px;text-transform:uppercase;font-weight:900;margin-bottom:5px}.decision-box strong{font-size:10px;line-height:1.5;display:block}
 .profile{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.profile-card{padding:25px}.profile-card h2{margin:8px 0 12px;font-size:25px}.profile-card p{font-size:12px;color:var(--muted);line-height:1.75}.fit-row{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}.fit-row:last-child{border:0}.fit-icon{min-width:34px;height:34px;border-radius:9px;background:#eef2ff;color:var(--blue);display:grid;place-items:center;font-weight:900;font-size:10px}.fit-row strong{font-size:11px}.fit-row p{margin:4px 0 0;font-size:10px;line-height:1.5}
+
+.contact-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.contact-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:11px 15px;border-radius:9px;font-size:11px;font-weight:850;transition:.2s}
+.contact-btn.primary{background:#fff;color:#172554}.contact-btn.primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.14)}
+.contact-btn.secondary{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.16)}.contact-btn.secondary:hover{background:rgba(255,255,255,.16)}
+.contact-panel{background:linear-gradient(135deg,#172554,#101a37);color:#fff;border-radius:16px;padding:27px}
+.contact-panel h2{margin:8px 0 9px;font-size:27px}.contact-panel p{margin:0;color:#c5cee5;font-size:12px;line-height:1.7;max-width:700px}
+.contact-panel .eyebrow{color:#aebeff}
+.visual-placeholder{position:relative;overflow:hidden}
+.visual-placeholder:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 28% 32%,rgba(255,255,255,.42),transparent 13%),radial-gradient(circle at 72% 42%,rgba(255,255,255,.24),transparent 18%),linear-gradient(145deg,transparent 46%,rgba(255,255,255,.18) 47%,transparent 49%)}
+.visual-placeholder:after{content:"Accommodation visual · conceptual";position:absolute;left:12px;bottom:11px;font-size:9px;color:#fff;font-weight:750;letter-spacing:.3px}
 @media(max-width:1150px){.grid-4{grid-template-columns:repeat(2,1fr)}.tradeoffs{grid-template-columns:repeat(3,1fr)}.ai-flow{grid-template-columns:1fr}.ai-arrow{transform:rotate(90deg)}.compare{grid-template-columns:1fr}.match-center{flex-direction:row}.match-line{width:70px;height:1px}.profile{grid-template-columns:1fr}}
 @media(max-width:850px){.layout{display:block}.sidebar{display:none}.main{grid-column:auto}.content{padding:19px}.topbar{padding:0 19px}.grid-4,.grid-3,.grid-2,.roadmap{grid-template-columns:1fr}.hero{padding:27px}.hero h1{font-size:29px}.tradeoffs{grid-template-columns:1fr 1fr}.ab-grid,.decision-grid{grid-template-columns:1fr}.score-card{flex-direction:column}.arch-flow{flex-direction:column}.arch-arrow{transform:rotate(90deg)}.arch-box{width:100%}.surface-row{grid-template-columns:1fr}}
 </style>
@@ -85,6 +96,10 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
   <h1>From fragmented supply to a trusted, deduplicated and AI-ready accommodation catalog.</h1>
   <p>How I would approach product ownership for a marketplace data layer that aggregates millions of accommodation offers: improving entity resolution, defining catalog quality, measuring downstream business impact and preparing inventory for conversational discovery.</p>
   <div class="hero-bottom"><span class="hero-pill">15M+ scale context</span><span class="hero-pill">1,000+ partner context</span><span class="hero-pill">ML evaluation</span><span class="hero-pill">Quality governance</span><span class="hero-pill">AI distribution</span></div>
+  <div class="contact-actions">
+    <a class="contact-btn primary" href="mailto:monsealva31221@gmail.com?subject=Marketplace%20Data%20Case%20Study">✉ Contact me</a>
+    <a class="contact-btn secondary" href="https://www.linkedin.com/in/monserrat-s-339b8b252/" target="_blank" rel="noopener noreferrer">in LinkedIn</a>
+  </div>
 </div>
 <div class="notice"><strong>Portfolio disclosure:</strong> this is an independent case study based on the public role description. All performance metrics, partner names, experiments and business impact figures below are synthetic or illustrative—not HomeToGo internal data.</div>
 
@@ -163,9 +178,9 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
 </div>
 
 <div class="compare mt">
-  <div class="card listing"><div class="listing-head"><span class="badge blue" id="p1">Partner Alpha</span><span class="badge green">Active</span></div><div class="listing-img" id="img1">Image embedding similarity: 0.96</div><h3 id="name1">Alpine Lodge Munich</h3><div class="listing-address" id="addr1">Schlierseer Str. 14 · Bavaria · Germany</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo1">47.7378, 11.8592</b></div><div class="attr"><span>Bedrooms</span><b id="bed1">3</b></div><div class="attr"><span>Guests</span><b id="guest1">6</b></div><div class="attr"><span>Amenities</span><b id="amen1">Sauna · Wi-Fi · Parking</b></div></div></div>
+  <div class="card listing"><div class="listing-head"><span class="badge blue" id="p1">Partner Alpha</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder" id="img1">Image embedding similarity: 0.96</div><h3 id="name1">Alpine Lodge Munich</h3><div class="listing-address" id="addr1">Schlierseer Str. 14 · Bavaria · Germany</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo1">47.7378, 11.8592</b></div><div class="attr"><span>Bedrooms</span><b id="bed1">3</b></div><div class="attr"><span>Guests</span><b id="guest1">6</b></div><div class="attr"><span>Amenities</span><b id="amen1">Sauna · Wi-Fi · Parking</b></div></div></div>
   <div class="match-center"><div class="score-ring" id="scoreRing"><strong id="candidateScore">94%</strong></div><div class="match-line"></div><div class="decision" id="matchDecision">MERGE</div></div>
-  <div class="card listing"><div class="listing-head"><span class="badge orange" id="p2">Partner Beta</span><span class="badge green">Active</span></div><div class="listing-img" id="img2">Image embedding similarity: 0.96</div><h3 id="name2">Alpine Holiday Home near Munich</h3><div class="listing-address" id="addr2">Schlierseer Straße 14 · Bayern · DE</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo2">47.7379, 11.8590</b></div><div class="attr"><span>Bedrooms</span><b id="bed2">3</b></div><div class="attr"><span>Guests</span><b id="guest2">6</b></div><div class="attr"><span>Amenities</span><b id="amen2">Sauna · Internet · Car park</b></div></div></div>
+  <div class="card listing"><div class="listing-head"><span class="badge orange" id="p2">Partner Beta</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder" id="img2">Image embedding similarity: 0.96</div><h3 id="name2">Alpine Holiday Home near Munich</h3><div class="listing-address" id="addr2">Schlierseer Straße 14 · Bayern · DE</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo2">47.7379, 11.8590</b></div><div class="attr"><span>Bedrooms</span><b id="bed2">3</b></div><div class="attr"><span>Guests</span><b id="guest2">6</b></div><div class="attr"><span>Amenities</span><b id="amen2">Sauna · Internet · Car park</b></div></div></div>
 </div>
 
 <div class="card mt"><div class="card-title card-pad" style="margin:0"><h3>How I would evaluate matching</h3><span>Beyond a single offline metric</span></div><div class="table-wrap"><table>
@@ -244,8 +259,8 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
 </div>
 <div class="grid grid-2 mt">
   <div class="card card-pad"><div class="card-title"><h3>Illustrative ranked results</h3><span>Semantic + structured match</span></div>
-    <div class="result-card"><div class="result-img"></div><div><h4>Bavarian Mountain Cabin</h4><p>6 guests · Sauna · Pets · EV charging · Mountain view</p></div><div><strong>97%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
-    <div class="result-card"><div class="result-img"></div><div><h4>Alpine Forest Retreat</h4><p>4 guests · Sauna · Pets · Mountain view</p></div><div><strong>94%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
+    <div class="result-card"><div class="result-img visual-placeholder"></div><div><h4>Bavarian Mountain Cabin</h4><p>6 guests · Sauna · Pets · EV charging · Mountain view</p></div><div><strong>97%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
+    <div class="result-card"><div class="result-img visual-placeholder"></div><div><h4>Alpine Forest Retreat</h4><p>4 guests · Sauna · Pets · Mountain view</p></div><div><strong>94%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
   </div>
   <div class="card card-pad"><div class="card-title"><h3>AI readiness framework</h3><span>Synthetic coverage</span></div>
     <div class="health-row"><span>Normalized amenities</span><div class="progress"><span style="width:84%"></span></div><strong>84%</strong></div>
@@ -356,6 +371,15 @@ button,input{font:inherit}button{cursor:pointer}.layout{display:grid;grid-templa
   <div class="card story-card"><div class="eyebrow">HOW I THINK</div><h3>Start with the failure mode</h3><p>Understand where bad data creates user or business cost before choosing the solution.</p></div>
   <div class="card story-card"><div class="eyebrow">HOW I DECIDE</div><h3>Make trade-offs explicit</h3><p>Define primary metrics, guardrails and the evidence that would reverse the decision.</p></div>
   <div class="card story-card"><div class="eyebrow">HOW I COMMUNICATE</div><h3>Connect systems to outcomes</h3><p>Translate infrastructure metrics into language that Product, Commercial, Operations and leadership can act on.</p></div>
+</div>
+<div class="contact-panel mt-lg">
+  <div class="eyebrow">LET'S CONNECT</div>
+  <h2>Interested in discussing the case?</h2>
+  <p>I’d be happy to walk through the product decisions, assumptions and trade-offs behind this marketplace data infrastructure case study.</p>
+  <div class="contact-actions">
+    <a class="contact-btn primary" href="mailto:monsealva31221@gmail.com?subject=Marketplace%20Data%20Case%20Study">✉ monsealva31221@gmail.com</a>
+    <a class="contact-btn secondary" href="https://www.linkedin.com/in/monserrat-s-339b8b252/" target="_blank" rel="noopener noreferrer">in Connect on LinkedIn</a>
+  </div>
 </div>
 <div style="text-align:center;color:var(--muted);font-size:9px;margin-top:27px;line-height:1.7">Independent product case study · Synthetic marketplace data and illustrative experiments · Not affiliated with HomeToGo.</div>
 </section>
