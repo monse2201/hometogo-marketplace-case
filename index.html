@@ -463,7 +463,16 @@ function setCase(key){
  const map={p1:c.p1,p2:c.p2,name1:c.n1,name2:c.n2,addr1:c.a1,addr2:c.a2,geo1:c.g1,geo2:c.g2,bed1:c.b1,bed2:c.b2,guest1:c.u1,guest2:c.u2,amen1:c.m1,amen2:c.m2};
  Object.entries(map).forEach(([id,val])=>document.getElementById(id).textContent=val);
  document.getElementById("img1").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;document.getElementById("img2").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;
- const photoKind=key==="different"?"city":(key==="ambiguous"?"lake":"alpine");applyPhoto("img1",photoKind);applyPhoto("img2",photoKind);
+ if(key==="obvious"){
+   document.getElementById("img1").style.backgroundImage=PHOTO.alpine;
+   document.getElementById("img2").style.backgroundImage=PHOTO.lake;
+ } else if(key==="ambiguous"){
+   document.getElementById("img1").style.backgroundImage=PHOTO.lake;
+   document.getElementById("img2").style.backgroundImage=PHOTO.alpine;
+ } else {
+   document.getElementById("img1").style.backgroundImage=PHOTO.city;
+   document.getElementById("img2").style.backgroundImage=PHOTO.lake;
+ }
  candidateScore.textContent=c.score+"%";
  scoreRing.style.background=`conic-gradient(var(--green) 0 ${c.score}%,#e9edf3 ${c.score}% 100%)`;updateThreshold();
 }
@@ -507,35 +516,27 @@ function runAISearch(){
 }
 document.getElementById("aiQuery").addEventListener("keydown",e=>{if(e.key==="Enter")runAISearch()});
 
-// ===== V3 self-contained accommodation photos (embedded SVG data URIs) =====
-function svgPhoto(variant){
- const palettes={
-  alpine:["#9ec8e8","#d9e7d4","#36543e","#5d4435","#ead9b8","#23313c"],
-  lake:["#9fc7e5","#dce8d7","#476a52","#6b5140","#e6d5b5","#2d3944"],
-  city:["#c7d4e7","#e8dfd1","#6b7588","#4b4f59","#e9cfa9","#30343b"]
- };
- const p=palettes[variant]||palettes.alpine;
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
- <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${p[0]}"/><stop offset="1" stop-color="#eef5f8"/></linearGradient>
- <linearGradient id="glass"><stop stop-color="#dcecf2"/><stop offset="1" stop-color="#91afbd"/></linearGradient></defs>
- <rect width="1200" height="520" fill="url(#sky)"/>
- <path d="M0 300L190 150l110 86L450 74l155 170L760 112l200 190L1200 170v350H0z" fill="${p[1]}"/>
- <path d="M0 355L210 210l120 90L470 125l160 180L795 180l170 150L1200 220v300H0z" fill="${p[2]}" opacity=".9"/>
- <rect x="385" y="250" width="550" height="205" rx="7" fill="${p[4]}"/>
- <path d="M340 265L650 135l340 130z" fill="${p[3]}"/>
- <rect x="430" y="282" width="100" height="130" fill="url(#glass)"/><rect x="555" y="282" width="100" height="130" fill="url(#glass)"/>
- <rect x="680" y="282" width="100" height="130" fill="url(#glass)"/><rect x="805" y="282" width="85" height="130" fill="url(#glass)"/>
- <g fill="${p[5]}"><rect x="418" y="270" width="14" height="165"/><rect x="530" y="270" width="14" height="165"/><rect x="655" y="270" width="14" height="165"/><rect x="780" y="270" width="14" height="165"/><rect x="890" y="270" width="14" height="165"/></g>
- <rect x="370" y="435" width="590" height="20" fill="#795c43"/><ellipse cx="1050" cy="445" rx="220" ry="50" fill="#4d724f" opacity=".75"/>
- </svg>`;
- return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+// ===== Stock accommodation photography =====
+const PHOTO={
+  alpine:"url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85')",
+  lake:"url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85')",
+  city:"url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85')"
+};
+
+
+function preloadStockPhotos(){
+ Object.values(PHOTO).forEach(cssUrl=>{
+   const src=cssUrl.slice(5,-2);
+   const img=new Image();
+   img.src=src;
+ });
 }
-const PHOTO={alpine:svgPhoto("alpine"),lake:svgPhoto("lake"),city:svgPhoto("city")};
+preloadStockPhotos();
 
 function applyPhoto(id,kind){
  const el=document.getElementById(id); if(el) el.style.backgroundImage=PHOTO[kind]||PHOTO.alpine;
 }
-applyPhoto("img1","alpine");applyPhoto("img2","alpine");
+applyPhoto("img1","alpine");applyPhoto("img2","lake");
 document.querySelectorAll(".ai-photo").forEach((el,i)=>el.style.backgroundImage=i?PHOTO.lake:PHOTO.alpine);
 
 function showTip(e,text){
