@@ -74,10 +74,8 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 @media(max-width:1150px){.grid-4{grid-template-columns:repeat(2,1fr)}.tradeoffs{grid-template-columns:repeat(3,1fr)}.ai-flow{grid-template-columns:1fr}.ai-arrow{transform:rotate(90deg)}.compare{grid-template-columns:1fr}.match-center{flex-direction:row}.match-line{width:70px;height:1px}.profile{grid-template-columns:1fr}}
 @media(max-width:850px){.layout{display:block}.sidebar{display:none}.main{grid-column:auto}.content{padding:19px}.topbar{padding:0 19px}.grid-4,.grid-3,.grid-2,.roadmap{grid-template-columns:1fr}.hero{padding:27px}.hero h1{font-size:29px}.tradeoffs{grid-template-columns:1fr 1fr}.ab-grid,.decision-grid{grid-template-columns:1fr}.score-card{flex-direction:column}.arch-flow{flex-direction:column}.arch-arrow{transform:rotate(90deg)}.arch-box{width:100%}.surface-row{grid-template-columns:1fr}}
 
-/* ===== V3 interaction + embedded-photo upgrade ===== */
-.listing-img,.result-img{background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important}
+/* ===== V3 interaction upgrade ===== */
 .listing-img{position:relative;height:190px}
-.listing-img:before,.listing-img:after,.result-img:before,.result-img:after{display:none!important}
 .listing-img .image-label{position:absolute;left:12px;bottom:11px;z-index:5;background:rgba(16,26,55,.82);backdrop-filter:blur(7px);color:#fff;padding:7px 9px;border-radius:8px;font-size:9px;font-weight:800}
 .result-img{min-height:72px}
 .interactive{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
@@ -172,12 +170,12 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 <div class="card arch mt">
   <div class="card-title"><h3>Proposed marketplace data product architecture</h3><span>Conceptual product model</span></div>
   <div class="arch-flow">
-    <div class="arch-box"><strong>Supply Partners</strong><span>Feeds · APIs · availability · rates</span></div><div class="arch-arrow">→</div>
-    <div class="arch-box"><strong>Ingestion & Validation</strong><span>Schema checks · freshness · feed observability</span></div><div class="arch-arrow">→</div>
-    <div class="arch-box"><strong>Normalization</strong><span>Taxonomy · units · amenities · geo</span></div><div class="arch-arrow">→</div>
-    <div class="arch-box"><strong>Entity Resolution</strong><span>Matching · merge · confidence · feedback</span></div><div class="arch-arrow">→</div>
-    <div class="arch-box"><strong>Canonical Property</strong><span>Trusted identity + units + offers</span></div><div class="arch-arrow">→</div>
-    <div class="arch-box"><strong>Quality & Enrichment</strong><span>Score · images · NLP · embeddings</span></div>
+    <div class="arch-box hover-tip" data-tip="Raw supply from 1,000+ partner integrations, at varying cadences and reliability"><strong>Supply Partners</strong><span>Feeds · APIs · availability · rates</span></div><div class="arch-arrow">→</div>
+    <div class="arch-box hover-tip" data-tip="Schema validation and freshness SLAs catch broken or stale feeds before they reach the catalog"><strong>Ingestion & Validation</strong><span>Schema checks · freshness · feed observability</span></div><div class="arch-arrow">→</div>
+    <div class="arch-box hover-tip" data-tip="Reconciles different taxonomies, units and amenity labels into one shared vocabulary"><strong>Normalization</strong><span>Taxonomy · units · amenities · geo</span></div><div class="arch-arrow">→</div>
+    <div class="arch-box hover-tip" data-tip="See the Deduplication Lab for the interactive matching threshold model"><strong>Entity Resolution</strong><span>Matching · merge · confidence · feedback</span></div><div class="arch-arrow">→</div>
+    <div class="arch-box hover-tip" data-tip="The trusted, single representation every downstream surface reads from"><strong>Canonical Property</strong><span>Trusted identity + units + offers</span></div><div class="arch-arrow">→</div>
+    <div class="arch-box hover-tip" data-tip="See the Quality Score and AI Readiness pages for scoring and enrichment details"><strong>Quality & Enrichment</strong><span>Score · images · NLP · embeddings</span></div>
   </div>
   <div class="surface-row"><div class="surface">Search & Ranking</div><div class="surface">Booking & Partner APIs</div><div class="surface">AI / LLM Distribution</div></div>
 </div>
@@ -217,9 +215,9 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 </div>
 
 <div class="compare mt">
-  <div class="card listing"><div class="listing-head"><span class="badge blue" id="p1">Partner Alpha</span><span class="badge green">Active</span></div><div class="listing-img interactive" id="img1"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name1">Alpine Lodge Munich</h3><div class="listing-address" id="addr1">Schlierseer Str. 14 · Bavaria · Germany</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo1">47.7378, 11.8592</b></div><div class="attr"><span>Bedrooms</span><b id="bed1">3</b></div><div class="attr"><span>Guests</span><b id="guest1">6</b></div><div class="attr"><span>Amenities</span><b id="amen1">Sauna · Wi-Fi · Parking</b></div></div></div>
+  <div class="card listing"><div class="listing-head"><span class="badge blue" id="p1">Partner Alpha</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder interactive" id="img1"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name1">Alpine Lodge Munich</h3><div class="listing-address" id="addr1">Schlierseer Str. 14 · Bavaria · Germany</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo1">47.7378, 11.8592</b></div><div class="attr"><span>Bedrooms</span><b id="bed1">3</b></div><div class="attr"><span>Guests</span><b id="guest1">6</b></div><div class="attr"><span>Amenities</span><b id="amen1">Sauna · Wi-Fi · Parking</b></div></div></div>
   <div class="match-center"><div class="score-ring" id="scoreRing"><strong id="candidateScore">94%</strong></div><div class="match-line"></div><div class="decision" id="matchDecision">MERGE</div></div>
-  <div class="card listing"><div class="listing-head"><span class="badge orange" id="p2">Partner Beta</span><span class="badge green">Active</span></div><div class="listing-img interactive" id="img2"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name2">Alpine Holiday Home near Munich</h3><div class="listing-address" id="addr2">Schlierseer Straße 14 · Bayern · DE</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo2">47.7379, 11.8590</b></div><div class="attr"><span>Bedrooms</span><b id="bed2">3</b></div><div class="attr"><span>Guests</span><b id="guest2">6</b></div><div class="attr"><span>Amenities</span><b id="amen2">Sauna · Internet · Car park</b></div></div></div>
+  <div class="card listing"><div class="listing-head"><span class="badge orange" id="p2">Partner Beta</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder interactive" id="img2"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name2">Alpine Holiday Home near Munich</h3><div class="listing-address" id="addr2">Schlierseer Straße 14 · Bayern · DE</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo2">47.7379, 11.8590</b></div><div class="attr"><span>Bedrooms</span><b id="bed2">3</b></div><div class="attr"><span>Guests</span><b id="guest2">6</b></div><div class="attr"><span>Amenities</span><b id="amen2">Sauna · Internet · Car park</b></div></div></div>
 </div>
 
 <div class="card mt"><div class="card-title card-pad" style="margin:0"><h3>How I would evaluate matching</h3><span>Beyond a single offline metric</span></div><div class="table-wrap"><table>
@@ -236,13 +234,19 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 <section class="page" id="quality">
 <div class="section-head"><div class="eyebrow">Catalog Governance</div><h1>Define what “good data” means—and make it actionable.</h1><p>A quality score should not be a vanity metric. It should identify which dimensions of a listing are likely to affect discovery, traveler confidence, bookability and partner performance.</p></div>
 <div class="grid grid-2">
-  <div class="card card-pad"><div class="card-title"><h3>Marketplace Quality Score</h3><span>Synthetic weighted index</span></div><div class="score-card"><div class="big-score"><div><strong>82</strong><small>/ 100</small></div></div><div class="quality-components">
-    <div class="quality-row"><span>Content completeness</span><div class="progress"><span style="width:88%"></span></div><strong>88</strong></div>
-    <div class="quality-row"><span>Location accuracy</span><div class="progress"><span style="width:93%"></span></div><strong>93</strong></div>
-    <div class="quality-row"><span>Image quality</span><div class="progress"><span style="width:84%"></span></div><strong>84</strong></div>
-    <div class="quality-row"><span>Availability freshness</span><div class="progress"><span style="width:74%"></span></div><strong>74</strong></div>
-    <div class="quality-row"><span>Price competitiveness</span><div class="progress"><span style="width:77%"></span></div><strong>77</strong></div>
-  </div></div></div>
+  <div class="card card-pad"><div class="card-title"><h3>Marketplace Quality Score</h3><span>Synthetic weighted index</span></div><div class="score-card"><div class="big-score" id="bigScore"><div><strong id="bigScoreNum">82</strong><small>/ 100</small></div></div><div class="quality-components">
+    <div class="quality-row hover-tip" data-tip="25% weight · attributes, amenities and descriptions present on the listing" data-id="completeness"><span>Content completeness</span><div class="progress"><span style="width:88%"></span></div><strong>88</strong></div>
+    <div class="quality-row hover-tip" data-tip="25% weight · location, capacity and metadata consistency" data-id="accuracy"><span>Location accuracy</span><div class="progress"><span style="width:93%"></span></div><strong>93</strong></div>
+    <div class="quality-row hover-tip" data-tip="15% weight · image coverage, resolution and relevance" data-id="images"><span>Image quality</span><div class="progress"><span style="width:84%"></span></div><strong>84</strong></div>
+    <div class="quality-row hover-tip" data-tip="20% weight · how quickly availability and price update latency is resolved" data-id="freshness"><span>Availability freshness</span><div class="progress"><span style="width:74%"></span></div><strong>74</strong></div>
+    <div class="quality-row hover-tip" data-tip="15% weight · rates and booking conditions vs. comparable supply" data-id="price"><span>Price competitiveness</span><div class="progress"><span style="width:77%"></span></div><strong>77</strong></div>
+  </div></div>
+  <div class="run-panel">
+    <p><strong>Recalculate the quality score.</strong><br>Re-run the weighted model against a refreshed synthetic sample of listings.</p>
+    <button class="btn" id="runQualityBtn" onclick="runQualityScore()">▶ Recalculate</button>
+    <div class="run-status" id="qualityStatus">Ready</div>
+  </div>
+  </div>
   <div class="card card-pad"><div class="card-title"><h3>Proposed scoring model</h3><span>Starting hypothesis</span></div><table style="min-width:0"><tr><td><strong>Completeness</strong></td><td>25%</td><td>Attributes, amenities, descriptions</td></tr><tr><td><strong>Accuracy</strong></td><td>25%</td><td>Location, capacity, metadata consistency</td></tr><tr><td><strong>Freshness</strong></td><td>20%</td><td>Availability and price update latency</td></tr><tr><td><strong>Visual quality</strong></td><td>15%</td><td>Image coverage, resolution, relevance</td></tr><tr><td><strong>Competitiveness</strong></td><td>15%</td><td>Rates and booking conditions</td></tr></table></div>
 </div>
 <div class="card mt"><div class="card-title card-pad" style="margin:0"><h3>Partner quality benchmark</h3><span>Illustrative partner prioritization</span></div><div class="table-wrap"><table>
@@ -271,17 +275,22 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 </div>
 <div class="grid grid-2 mt">
   <div class="card card-pad"><div class="card-title"><h3>Impact chain</h3><span>Product narrative</span></div><div class="funnel">
-    <div class="funnel-step" style="width:100%"><strong>Cleaner Partner Feeds</strong>Completeness + freshness + validation</div><div>↓</div>
-    <div class="funnel-step" style="width:88%"><strong>Better Entity Resolution</strong>Fewer duplicates and conflicting attributes</div><div>↓</div>
-    <div class="funnel-step" style="width:76%"><strong>Better Search & Ranking</strong>More relevant and diverse results</div><div>↓</div>
-    <div class="funnel-step" style="width:64%"><strong>Higher Engagement</strong>Qualified clicks and listing views</div><div>↓</div>
-    <div class="funnel-step" style="width:52%"><strong>More Bookings</strong>Conversion and marketplace value</div>
+    <div class="funnel-step hover-tip" data-tip="Stage 1 of 5 · schema checks, freshness SLAs and feed observability at ingestion" style="width:100%"><strong>Cleaner Partner Feeds</strong>Completeness + freshness + validation</div><div>↓</div>
+    <div class="funnel-step hover-tip" data-tip="Stage 2 of 5 · matching threshold policy reduces false merges and duplicate exposure" style="width:88%"><strong>Better Entity Resolution</strong>Fewer duplicates and conflicting attributes</div><div>↓</div>
+    <div class="funnel-step hover-tip" data-tip="Stage 3 of 5 · cleaner canonical catalog improves result diversity and relevance" style="width:76%"><strong>Better Search & Ranking</strong>More relevant and diverse results</div><div>↓</div>
+    <div class="funnel-step hover-tip" data-tip="Stage 4 of 5 · more relevant results drive qualified clicks and longer sessions" style="width:64%"><strong>Higher Engagement</strong>Qualified clicks and listing views</div><div>↓</div>
+    <div class="funnel-step hover-tip" data-tip="Stage 5 of 5 · the compounding effect on booking conversion and GBV" style="width:52%"><strong>More Bookings</strong>Conversion and marketplace value</div>
   </div></div>
   <div class="card card-pad"><div class="card-title"><h3>A/B Test · Deduplicated ranking</h3><span>Illustrative experiment design</span></div>
     <p style="font-size:11px;color:var(--muted);line-height:1.6"><strong>Hypothesis:</strong> reducing duplicate property exposure in the first 20 results increases discovery diversity and booking conversion.</p>
-    <div class="ab-grid mt"><div class="variant"><h4>Control</h4><div class="variant-number">3.19%</div><small>Booking conversion</small><hr style="border:0;border-top:1px solid var(--border);margin:14px 0"><small>Sessions</small><strong style="display:block;margin-top:4px">512,420</strong></div>
-    <div class="variant treatment"><h4>Treatment</h4><div class="variant-number">3.42%</div><small>Booking conversion</small><hr style="border:0;border-top:1px solid var(--border);margin:14px 0"><small>Sessions</small><strong style="display:block;margin-top:4px">511,870</strong></div></div>
-    <div style="margin-top:15px;padding:12px;background:#ecfaf4;border-radius:8px;font-size:10px;color:#187552"><strong>Illustrative +7.2% relative uplift</strong> · example significance threshold p &lt; 0.05</div>
+    <div class="ab-grid mt"><div class="variant hover-tip" data-tip="No change to ranking · duplicates shown as returned by matching"><h4>Control</h4><div class="variant-number" id="controlCvr">3.19%</div><small>Booking conversion</small><hr style="border:0;border-top:1px solid var(--border);margin:14px 0"><small>Sessions</small><strong style="display:block;margin-top:4px" id="controlSessions">512,420</strong></div>
+    <div class="variant treatment hover-tip" data-tip="Duplicate properties collapsed before ranking the first 20 results"><h4>Treatment</h4><div class="variant-number" id="treatmentCvr">3.42%</div><small>Booking conversion</small><hr style="border:0;border-top:1px solid var(--border);margin:14px 0"><small>Sessions</small><strong style="display:block;margin-top:4px" id="treatmentSessions">511,870</strong></div></div>
+    <div style="margin-top:15px;padding:12px;background:#ecfaf4;border-radius:8px;font-size:10px;color:#187552" id="expResult"><strong>Illustrative +7.2% relative uplift</strong> · example significance threshold p &lt; 0.05</div>
+    <div class="run-panel">
+      <p><strong>Re-run the experiment simulation.</strong><br>Draw a fresh synthetic sample for control and treatment.</p>
+      <button class="btn" id="runExpBtn" onclick="runExperiment()">▶ Run experiment</button>
+      <div class="run-status" id="expStatus">Ready</div>
+    </div>
   </div>
 </div>
 <div class="card decision-card mt"><h3>Experiment guardrails I would require</h3><p>Primary metric: booking conversion. Secondary: CTR and unique-property exposure. Guardrails: cancellation rate, price discrepancy, supply coverage, latency and partner distribution. I would also segment results by market, device, property type and partner concentration before generalizing the result.</p></div>
@@ -304,8 +313,8 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 </div>
 <div class="grid grid-2 mt">
   <div class="card card-pad"><div class="card-title"><h3>Illustrative ranked results</h3><span>Semantic + structured match</span></div>
-    <div class="result-card"><div class="result-img ai-photo"></div><div><h4>Bavarian Mountain Cabin</h4><p>6 guests · Sauna · Pets · EV charging · Mountain view</p></div><div><strong>97%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
-    <div class="result-card"><div class="result-img ai-photo"></div><div><h4>Alpine Forest Retreat</h4><p>4 guests · Sauna · Pets · Mountain view</p></div><div><strong>94%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
+    <div class="result-card"><div class="result-img visual-placeholder ai-photo"></div><div><h4>Bavarian Mountain Cabin</h4><p>6 guests · Sauna · Pets · EV charging · Mountain view</p></div><div><strong>97%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
+    <div class="result-card"><div class="result-img visual-placeholder ai-photo"></div><div><h4>Alpine Forest Retreat</h4><p>4 guests · Sauna · Pets · Mountain view</p></div><div><strong>94%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
   </div>
   <div class="card card-pad"><div class="card-title"><h3>AI readiness framework</h3><span>Synthetic coverage</span></div>
     <div class="health-row interactive"><span>Normalized amenities</span><div class="progress"><span style="width:84%"></span></div><strong>84%</strong></div>
@@ -333,7 +342,12 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 <span class="sql-blue">FROM</span> marketplace.listings
 <span class="sql-blue">WHERE</span> listing_status = <span class="sql-yellow">'ACTIVE'</span>
 <span class="sql-blue">GROUP BY</span> partner_name
-<span class="sql-blue">ORDER BY</span> duplicate_rate <span class="sql-blue">DESC</span>;</pre></div>
+<span class="sql-blue">ORDER BY</span> duplicate_rate <span class="sql-blue">DESC</span>;</pre>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-top:1px solid rgba(255,255,255,.08)">
+    <span style="font-size:9px;color:#8fa0c3" id="sql1Status">Not run yet</span>
+    <button class="btn" id="sql1Btn" onclick="runQuery('sql1')" style="background:#2a3a63">▶ Run query</button>
+  </div>
+</div>
 <div class="code"><div class="code-head"><span>quality_vs_conversion.sql</span><span>BigQuery-style SQL</span></div><pre><span class="sql-blue">WITH</span> perf <span class="sql-blue">AS</span> (
   <span class="sql-blue">SELECT</span>
     listing_id,
@@ -354,15 +368,20 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
     <span class="sql-purple">SUM</span>(bookings), <span class="sql-purple">SUM</span>(views)
   ) <span class="sql-blue">AS</span> conversion_rate
 <span class="sql-blue">FROM</span> perf
-<span class="sql-blue">GROUP BY</span> quality_band;</pre></div>
+<span class="sql-blue">GROUP BY</span> quality_band;</pre>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-top:1px solid rgba(255,255,255,.08)">
+    <span style="font-size:9px;color:#8fa0c3" id="sql2Status">Not run yet</span>
+    <button class="btn" id="sql2Btn" onclick="runQuery('sql2')" style="background:#2a3a63">▶ Run query</button>
+  </div>
 </div>
-<div class="card mt"><div class="card-title card-pad" style="margin:0"><h3>Illustrative analytical output</h3><span>Association ≠ causation</span></div><div class="table-wrap"><table>
+</div>
+<div class="card mt" id="sqlOutputCard"><div class="card-title card-pad" style="margin:0"><h3>Illustrative analytical output</h3><span>Association ≠ causation · run a query above to refresh</span></div><div class="table-wrap"><table>
 <thead><tr><th>Quality Band</th><th>Listings</th><th>Avg CTR</th><th>Booking CVR</th><th>Next Question</th></tr></thead>
-<tbody>
-<tr><td><span class="badge green">90–100</span></td><td>3.1M</td><td>21.4%</td><td><strong>3.81%</strong></td><td>Which quality dimensions explain the difference?</td></tr>
-<tr><td><span class="badge blue">80–89</span></td><td>5.6M</td><td>18.9%</td><td><strong>3.44%</strong></td><td>Does mix by market/property type confound this?</td></tr>
-<tr><td><span class="badge orange">70–79</span></td><td>4.2M</td><td>16.8%</td><td><strong>3.01%</strong></td><td>Which fixes have the highest expected ROI?</td></tr>
-<tr><td><span class="badge red">&lt;70</span></td><td>2.5M</td><td>13.2%</td><td><strong>2.41%</strong></td><td>Should low-confidence inventory be suppressed?</td></tr>
+<tbody id="sqlOutputBody">
+<tr class="hover-tip" data-tip="Top band: highest completeness, freshness and location accuracy"><td><span class="badge green">90–100</span></td><td>3.1M</td><td>21.4%</td><td><strong>3.81%</strong></td><td>Which quality dimensions explain the difference?</td></tr>
+<tr class="hover-tip" data-tip="Second band: generally healthy, some freshness gaps"><td><span class="badge blue">80–89</span></td><td>5.6M</td><td>18.9%</td><td><strong>3.44%</strong></td><td>Does mix by market/property type confound this?</td></tr>
+<tr class="hover-tip" data-tip="Below-target band: prioritize for partner outreach"><td><span class="badge orange">70–79</span></td><td>4.2M</td><td>16.8%</td><td><strong>3.01%</strong></td><td>Which fixes have the highest expected ROI?</td></tr>
+<tr class="hover-tip" data-tip="Lowest band: candidates for suppression or manual review"><td><span class="badge red">&lt;70</span></td><td>2.5M</td><td>13.2%</td><td><strong>2.41%</strong></td><td>Should low-confidence inventory be suppressed?</td></tr>
 </tbody></table></div></div>
 </section>
 
@@ -463,16 +482,6 @@ function setCase(key){
  const map={p1:c.p1,p2:c.p2,name1:c.n1,name2:c.n2,addr1:c.a1,addr2:c.a2,geo1:c.g1,geo2:c.g2,bed1:c.b1,bed2:c.b2,guest1:c.u1,guest2:c.u2,amen1:c.m1,amen2:c.m2};
  Object.entries(map).forEach(([id,val])=>document.getElementById(id).textContent=val);
  document.getElementById("img1").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;document.getElementById("img2").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;
- if(key==="obvious"){
-   document.getElementById("img1").style.backgroundImage=PHOTO.alpine;
-   document.getElementById("img2").style.backgroundImage=PHOTO.lake;
- } else if(key==="ambiguous"){
-   document.getElementById("img1").style.backgroundImage=PHOTO.lake;
-   document.getElementById("img2").style.backgroundImage=PHOTO.alpine;
- } else {
-   document.getElementById("img1").style.backgroundImage=PHOTO.city;
-   document.getElementById("img2").style.backgroundImage=PHOTO.lake;
- }
  candidateScore.textContent=c.score+"%";
  scoreRing.style.background=`conic-gradient(var(--green) 0 ${c.score}%,#e9edf3 ${c.score}% 100%)`;updateThreshold();
 }
@@ -516,41 +525,19 @@ function runAISearch(){
 }
 document.getElementById("aiQuery").addEventListener("keydown",e=>{if(e.key==="Enter")runAISearch()});
 
-// ===== Stock accommodation photography =====
-const PHOTO={
-  alpine:"url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85')",
-  lake:"url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85')",
-  city:"url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85')"
-};
-
-
-function preloadStockPhotos(){
- Object.values(PHOTO).forEach(cssUrl=>{
-   const src=cssUrl.slice(5,-2);
-   const img=new Image();
-   img.src=src;
- });
-}
-preloadStockPhotos();
-
-function applyPhoto(id,kind){
- const el=document.getElementById(id); if(el) el.style.backgroundImage=PHOTO[kind]||PHOTO.alpine;
-}
-applyPhoto("img1","alpine");applyPhoto("img2","lake");
-document.querySelectorAll(".ai-photo").forEach((el,i)=>el.style.backgroundImage=i?PHOTO.lake:PHOTO.alpine);
-
 function showTip(e,text){
  let tip=document.getElementById("globalTooltip");
  if(!tip){tip=document.createElement("div");tip.id="globalTooltip";tip.className="chart-tooltip";document.body.appendChild(tip)}
  tip.textContent=text;tip.style.left=(e.clientX+14)+"px";tip.style.top=(e.clientY+14)+"px";tip.classList.add("show");
 }
 function hideTip(){const t=document.getElementById("globalTooltip");if(t)t.classList.remove("show")}
-document.querySelectorAll(".trade,.bar,.metric,.health-row").forEach(el=>{
+document.querySelectorAll(".trade,.bar,.metric,.health-row,.quality-row,.funnel-step,.variant,.arch-box,tr.hover-tip").forEach(el=>{
  el.addEventListener("mousemove",e=>{
   let text=el.dataset.tip;
   if(!text){
    if(el.classList.contains("metric")) text="Synthetic case-study metric. Hover interactions are included to make the analytical story easier to inspect.";
    else if(el.classList.contains("health-row")) text="Illustrative coverage/quality indicator used to diagnose catalog health.";
+   else if(el.classList.contains("quality-row")) text="Part of the weighted Quality Score. Click Recalculate above to resample.";
   }
   if(text)showTip(e,text);
  });
@@ -558,6 +545,86 @@ document.querySelectorAll(".trade,.bar,.metric,.health-row").forEach(el=>{
 });
 
 function setAIQuery(q){document.getElementById("aiQuery").value=q;runAISearch()}
+
+// ===== Quality Score recalculation =====
+function runQualityScore(){
+ const btn=document.getElementById("runQualityBtn"),status=document.getElementById("qualityStatus");
+ btn.classList.add("running");btn.textContent="Recalculating…";status.textContent="Resampling listings…";status.style.color="var(--blue)";
+ setTimeout(()=>{
+  const rows=document.querySelectorAll(".quality-row");let weighted=0;const weights={completeness:.25,accuracy:.25,images:.15,freshness:.20,price:.15};
+  rows.forEach(row=>{
+   const id=row.dataset.id,base=parseInt(row.querySelector("strong").textContent,10);
+   const delta=Math.round((Math.random()*10)-5);
+   const val=Math.max(40,Math.min(99,base+delta));
+   row.querySelector("strong").textContent=val;
+   row.querySelector(".progress > span").style.width=val+"%";
+   row.classList.add("metric-flash");
+   weighted+=val*(weights[id]||0);
+  });
+  const score=Math.round(weighted);
+  document.getElementById("bigScoreNum").textContent=score;
+  document.getElementById("bigScore").style.background=`conic-gradient(var(--green) 0 ${score}%,#edf0f4 ${score}%)`;
+  status.textContent="✓ Recalculated";status.style.color="var(--green)";btn.classList.remove("running");btn.textContent="▶ Recalculate";
+  setTimeout(()=>rows.forEach(r=>r.classList.remove("metric-flash")),600);
+ },700);
+}
+
+// ===== A/B experiment re-run =====
+function runExperiment(){
+ const btn=document.getElementById("runExpBtn"),status=document.getElementById("expStatus");
+ btn.classList.add("running");btn.textContent="Sampling…";status.textContent="Drawing fresh sessions…";status.style.color="var(--blue)";
+ setTimeout(()=>{
+  const controlBase=3.19,controlCvr=(controlBase+(Math.random()*.3-.15)).toFixed(2);
+  const upliftPct=6+Math.random()*4;
+  const treatmentCvr=(controlCvr*(1+upliftPct/100)).toFixed(2);
+  const controlSessions=(500000+Math.floor(Math.random()*30000)).toLocaleString();
+  const treatmentSessions=(500000+Math.floor(Math.random()*30000)).toLocaleString();
+  document.getElementById("controlCvr").textContent=controlCvr+"%";
+  document.getElementById("treatmentCvr").textContent=treatmentCvr+"%";
+  document.getElementById("controlSessions").textContent=controlSessions;
+  document.getElementById("treatmentSessions").textContent=treatmentSessions;
+  document.getElementById("expResult").innerHTML=`<strong>Illustrative +${upliftPct.toFixed(1)}% relative uplift</strong> · example significance threshold p &lt; 0.05`;
+  document.querySelectorAll(".variant").forEach(v=>v.classList.add("metric-flash"));
+  status.textContent="✓ Simulation complete";status.style.color="var(--green)";btn.classList.remove("running");btn.textContent="▶ Run experiment";
+  setTimeout(()=>document.querySelectorAll(".variant").forEach(v=>v.classList.remove("metric-flash")),600);
+ },700);
+}
+
+// ===== SQL query simulation =====
+const sqlOutputs={
+ sql1:`<tr class="hover-tip" data-tip="Highest health, lowest duplicate exposure"><td><div class="partner"><span class="partner-logo">A</span><strong>Partner Alpha</strong></div></td><td>2.1%</td><td>0.97</td></tr>
+       <tr class="hover-tip" data-tip="Monitor: duplicate rate trending up this month"><td><div class="partner"><span class="partner-logo">B</span><strong>Partner Beta</strong></div></td><td>4.2%</td><td>0.93</td></tr>
+       <tr class="hover-tip" data-tip="Needs improvement: freshness and completeness gaps"><td><div class="partner"><span class="partner-logo">D</span><strong>Partner Delta</strong></div></td><td>7.1%</td><td>0.88</td></tr>
+       <tr class="hover-tip" data-tip="Action required: highest duplicate rate in the portfolio"><td><div class="partner"><span class="partner-logo">C</span><strong>Partner Gamma</strong></div></td><td>9.8%</td><td>0.81</td></tr>`,
+ sql2:`<tr class="hover-tip" data-tip="Top band: highest completeness, freshness and location accuracy"><td><span class="badge green">90–100</span></td><td>3.1M</td><td>21.4%</td><td><strong>3.81%</strong></td><td>Which quality dimensions explain the difference?</td></tr>
+       <tr class="hover-tip" data-tip="Second band: generally healthy, some freshness gaps"><td><span class="badge blue">80–89</span></td><td>5.6M</td><td>18.9%</td><td><strong>3.44%</strong></td><td>Does mix by market/property type confound this?</td></tr>
+       <tr class="hover-tip" data-tip="Below-target band: prioritize for partner outreach"><td><span class="badge orange">70–79</span></td><td>4.2M</td><td>16.8%</td><td><strong>3.01%</strong></td><td>Which fixes have the highest expected ROI?</td></tr>
+       <tr class="hover-tip" data-tip="Lowest band: candidates for suppression or manual review"><td><span class="badge red">&lt;70</span></td><td>2.5M</td><td>13.2%</td><td><strong>2.41%</strong></td><td>Should low-confidence inventory be suppressed?</td></tr>`
+};
+function runQuery(id){
+ const btn=document.getElementById(id+"Btn"),status=document.getElementById(id+"Status");
+ btn.classList.add("running");btn.textContent="Running…";status.textContent="Executing…";status.style.color="#9db3e6";
+ setTimeout(()=>{
+  const ms=(320+Math.random()*260).toFixed(0);
+  status.textContent="✓ Query complete · "+ms+"ms";status.style.color="#7fe3ae";btn.classList.remove("running");btn.textContent="▶ Run again";
+  if(id==="sql2"){
+   const table=document.querySelector("#sqlOutputCard table"),thead=table.querySelector("thead tr");
+   thead.innerHTML="<th>Quality Band</th><th>Listings</th><th>Avg CTR</th><th>Booking CVR</th><th>Next Question</th>";
+   document.getElementById("sqlOutputBody").innerHTML=sqlOutputs.sql2;
+  } else {
+   const table=document.querySelector("#sqlOutputCard table"),thead=table.querySelector("thead tr");
+   thead.innerHTML="<th>Partner</th><th>Duplicate Rate</th><th>Avg Match Confidence</th>";
+   document.getElementById("sqlOutputBody").innerHTML=sqlOutputs.sql1;
+  }
+  document.getElementById("sqlOutputCard").scrollIntoView({behavior:"smooth",block:"center"});
+  document.getElementById("sqlOutputCard").classList.add("metric-flash");
+  document.querySelectorAll("#sqlOutputBody tr").forEach(el=>{
+   el.addEventListener("mousemove",e=>{if(el.dataset.tip)showTip(e,el.dataset.tip)});
+   el.addEventListener("mouseleave",hideTip);
+  });
+  setTimeout(()=>document.getElementById("sqlOutputCard").classList.remove("metric-flash"),600);
+ },550);
+}
 
 </script>
 </body>
