@@ -63,6 +63,28 @@ linear-gradient(90deg,transparent 0 8%,rgba(24,32,38,.92) 8% 12%,transparent 12%
 linear-gradient(180deg,rgba(233,224,201,.96) 0 18%,#34485a 18% 23%,rgba(222,235,239,.90) 23% 78%,#8b674a 78% 100%);
 box-shadow:0 8px 18px rgba(17,24,39,.22)}
 .visual-placeholder:after{content:"";position:absolute;width:68%;height:28%;right:3%;bottom:60%;background:#473b32;clip-path:polygon(8% 100%,48% 0,100% 100%);filter:drop-shadow(0 3px 2px rgba(0,0,0,.15))}
+
+.visual-placeholder.style-lake{background:
+linear-gradient(180deg,rgba(60,120,150,.10),rgba(17,24,39,.10)),
+linear-gradient(180deg,#cfe6f2 0 44%,#8fb9cf 44% 47%,#4d8fa8 47% 70%,#2f6a82 70% 100%)}
+.visual-placeholder.style-lake:before{content:"";position:absolute;width:46%;height:46%;left:10%;bottom:16%;border-radius:3px;background:
+linear-gradient(90deg,transparent 0 10%,rgba(24,32,38,.9) 10% 15%,transparent 15% 40%,rgba(24,32,38,.9) 40% 45%,transparent 45% 70%,rgba(24,32,38,.9) 70% 75%,transparent 75%),
+linear-gradient(180deg,rgba(240,235,220,.96) 0 22%,#2e4658 22% 27%,rgba(230,240,242,.9) 27% 100%);
+box-shadow:0 8px 16px rgba(15,25,35,.25)}
+.visual-placeholder.style-lake:after{content:"";position:absolute;width:56%;height:24%;left:7%;bottom:58%;background:#3f5266;clip-path:polygon(0 100%,50% 15%,100% 100%);filter:drop-shadow(0 3px 2px rgba(0,0,0,.15))}
+.visual-placeholder.style-lake .dock{content:"";position:absolute;width:30%;height:5%;right:6%;bottom:14%;background:repeating-linear-gradient(90deg,#8b674a 0 8%,#6f5138 8% 10%);border-radius:2px}
+
+.visual-placeholder.style-city{background:
+linear-gradient(180deg,rgba(90,100,130,.12),rgba(17,24,39,.14)),
+linear-gradient(180deg,#dbe2ee 0 40%,#aab4c9 40% 100%)}
+.visual-placeholder.style-city:before{content:"";position:absolute;width:30%;height:70%;left:12%;bottom:0;background:
+repeating-linear-gradient(0deg,rgba(24,32,38,.85) 0 6%,transparent 6% 13%),
+repeating-linear-gradient(90deg,rgba(24,32,38,.85) 0 8%,transparent 8% 22%),
+#5c6a80;box-shadow:0 6px 16px rgba(15,25,35,.2)}
+.visual-placeholder.style-city:after{content:"";position:absolute;width:40%;height:88%;right:12%;bottom:0;background:
+repeating-linear-gradient(0deg,rgba(24,32,38,.85) 0 5%,transparent 5% 11%),
+repeating-linear-gradient(90deg,rgba(24,32,38,.85) 0 7%,transparent 7% 19%),
+#465066;box-shadow:0 6px 20px rgba(15,25,35,.25);clip-path:none}
 .listing-img .image-label{position:absolute;left:12px;bottom:10px;z-index:4;background:rgba(16,26,55,.78);color:white;padding:6px 8px;border-radius:7px;font-size:9px}
 .hover-tip{position:relative}.hover-tip[data-tip]:hover:after{content:attr(data-tip);position:absolute;z-index:100;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:max-content;max-width:230px;padding:8px 10px;background:#101a37;color:#fff;border-radius:7px;font-size:9px;line-height:1.4;box-shadow:0 8px 24px rgba(16,24,40,.2);pointer-events:none}
 .bar{cursor:help}.bar:hover{filter:brightness(.96);transform:translateY(-2px)}
@@ -473,15 +495,18 @@ function updateThreshold(){
 slider.addEventListener("input",updateThreshold);
 
 const cases={
- obvious:{score:94,p1:"Partner Alpha",p2:"Partner Beta",img:"0.96",n1:"Alpine Lodge Munich",n2:"Alpine Holiday Home near Munich",a1:"Schlierseer Str. 14 · Bavaria · Germany",a2:"Schlierseer Straße 14 · Bayern · DE",g1:"47.7378, 11.8592",g2:"47.7379, 11.8590",b1:"3",b2:"3",u1:"6",u2:"6",m1:"Sauna · Wi-Fi · Parking",m2:"Sauna · Internet · Car park"},
- ambiguous:{score:86,p1:"Partner Gamma",p2:"Partner Delta",img:"0.82",n1:"Lakeview Apartments Tegernsee",n2:"Lake View Residence",a1:"Seestraße 8 · Tegernsee",a2:"Seestraße 10 · Tegernsee",g1:"47.7102, 11.7561",g2:"47.7108, 11.7568",b1:"2",b2:"2",u1:"4",u2:"4",m1:"Lake view · Balcony · Wi-Fi",m2:"Lake view · Terrace · Wi-Fi"},
- different:{score:63,p1:"Partner Alpha",p2:"Partner Epsilon",img:"0.51",n1:"Old Town Studio Munich",n2:"Central Munich Residence",a1:"Tal 22 · München",a2:"Sendlinger Str. 31 · München",g1:"48.1368, 11.5770",g2:"48.1343, 11.5699",b1:"1",b2:"2",u1:"2",u2:"4",m1:"Wi-Fi · Kitchenette",m2:"Parking · Balcony · Kitchen"}
+ obvious:{score:94,p1:"Partner Alpha",p2:"Partner Beta",img:"0.96",n1:"Alpine Lodge Munich",n2:"Alpine Holiday Home near Munich",a1:"Schlierseer Str. 14 · Bavaria · Germany",a2:"Schlierseer Straße 14 · Bayern · DE",g1:"47.7378, 11.8592",g2:"47.7379, 11.8590",b1:"3",b2:"3",u1:"6",u2:"6",m1:"Sauna · Wi-Fi · Parking",m2:"Sauna · Internet · Car park",style1:"",style2:""},
+ ambiguous:{score:86,p1:"Partner Gamma",p2:"Partner Delta",img:"0.82",n1:"Lakeview Apartments Tegernsee",n2:"Lake View Residence",a1:"Seestraße 8 · Tegernsee",a2:"Seestraße 10 · Tegernsee",g1:"47.7102, 11.7561",g2:"47.7108, 11.7568",b1:"2",b2:"2",u1:"4",u2:"4",m1:"Lake view · Balcony · Wi-Fi",m2:"Lake view · Terrace · Wi-Fi",style1:"style-lake",style2:"style-lake"},
+ different:{score:63,p1:"Partner Alpha",p2:"Partner Epsilon",img:"0.51",n1:"Old Town Studio Munich",n2:"Central Munich Residence",a1:"Tal 22 · München",a2:"Sendlinger Str. 31 · München",g1:"48.1368, 11.5770",g2:"48.1343, 11.5699",b1:"1",b2:"2",u1:"2",u2:"4",m1:"Wi-Fi · Kitchenette",m2:"Parking · Balcony · Kitchen",style1:"style-city",style2:""}
 };
 function setCase(key){
  const c=cases[key];currentScore=c.score;document.querySelectorAll(".case-tab").forEach(x=>x.classList.toggle("active",x.dataset.case===key));
  const map={p1:c.p1,p2:c.p2,name1:c.n1,name2:c.n2,addr1:c.a1,addr2:c.a2,geo1:c.g1,geo2:c.g2,bed1:c.b1,bed2:c.b2,guest1:c.u1,guest2:c.u2,amen1:c.m1,amen2:c.m2};
  Object.entries(map).forEach(([id,val])=>document.getElementById(id).textContent=val);
- document.getElementById("img1").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;document.getElementById("img2").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;
+ const img1=document.getElementById("img1"),img2=document.getElementById("img2");
+ img1.className="listing-img visual-placeholder interactive "+c.style1;
+ img2.className="listing-img visual-placeholder interactive "+c.style2;
+ img1.innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;img2.innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;
  candidateScore.textContent=c.score+"%";
  scoreRing.style.background=`conic-gradient(var(--green) 0 ${c.score}%,#e9edf3 ${c.score}% 100%)`;updateThreshold();
 }
