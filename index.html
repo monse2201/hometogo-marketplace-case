@@ -73,6 +73,27 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 
 @media(max-width:1150px){.grid-4{grid-template-columns:repeat(2,1fr)}.tradeoffs{grid-template-columns:repeat(3,1fr)}.ai-flow{grid-template-columns:1fr}.ai-arrow{transform:rotate(90deg)}.compare{grid-template-columns:1fr}.match-center{flex-direction:row}.match-line{width:70px;height:1px}.profile{grid-template-columns:1fr}}
 @media(max-width:850px){.layout{display:block}.sidebar{display:none}.main{grid-column:auto}.content{padding:19px}.topbar{padding:0 19px}.grid-4,.grid-3,.grid-2,.roadmap{grid-template-columns:1fr}.hero{padding:27px}.hero h1{font-size:29px}.tradeoffs{grid-template-columns:1fr 1fr}.ab-grid,.decision-grid{grid-template-columns:1fr}.score-card{flex-direction:column}.arch-flow{flex-direction:column}.arch-arrow{transform:rotate(90deg)}.arch-box{width:100%}.surface-row{grid-template-columns:1fr}}
+
+/* ===== V3 interaction + embedded-photo upgrade ===== */
+.listing-img,.result-img{background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important}
+.listing-img{position:relative;height:190px}
+.listing-img:before,.listing-img:after,.result-img:before,.result-img:after{display:none!important}
+.listing-img .image-label{position:absolute;left:12px;bottom:11px;z-index:5;background:rgba(16,26,55,.82);backdrop-filter:blur(7px);color:#fff;padding:7px 9px;border-radius:8px;font-size:9px;font-weight:800}
+.result-img{min-height:72px}
+.interactive{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.interactive:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(16,24,40,.09);border-color:#d4dbeb}
+.chart-tooltip{position:fixed;z-index:9999;pointer-events:none;background:#101a37;color:#fff;padding:9px 11px;border-radius:8px;font-size:10px;line-height:1.45;box-shadow:0 10px 28px rgba(16,24,40,.25);opacity:0;transform:translateY(5px);transition:.12s}
+.chart-tooltip.show{opacity:1;transform:none}
+.run-panel{display:grid;grid-template-columns:1fr auto auto;align-items:center}
+.model-log{display:none;margin-top:12px;padding:12px 14px;border-radius:9px;background:#0f1830;color:#cbd5e1;font:10px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace}
+.model-log.show{display:block}
+.metric-flash{animation:metricFlash .55s ease}@keyframes metricFlash{0%{background:#eef2ff}100%{background:var(--surface2)}}
+.scenario-summary{margin-top:12px;padding:11px 13px;background:#f8fafc;border:1px solid var(--border);border-radius:9px;font-size:10px;color:var(--muted);line-height:1.55}
+.ai-status{margin-top:12px;display:none;padding:10px 12px;border-radius:8px;background:#eef8ff;color:#3157a8;font-size:10px}.ai-status.show{display:block}
+.example-queries{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.query-chip{border:1px solid var(--border);background:#fff;color:#52627f;border-radius:999px;padding:7px 10px;font-size:9px;font-weight:750;cursor:pointer}.query-chip:hover{border-color:#bfcaff;background:#f7f8ff;color:var(--blue)}
+.contact-mini{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:850px){.run-panel{grid-template-columns:1fr}.run-status{text-align:left}.listing-img{height:155px}}
+
 </style>
 </head>
 <body>
@@ -132,11 +153,11 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 <div class="grid grid-2 mt">
   <div class="card card-pad"><div class="card-title"><h3>Illustrative catalog quality evolution</h3><span>8-month scenario</span></div><div class="chart" id="qualityChart"></div></div>
   <div class="card card-pad"><div class="card-title"><h3>Data health baseline</h3><span>Synthetic</span></div>
-    <div class="health-row"><span>Matching precision</span><div class="progress"><span style="width:94%"></span></div><strong>94%</strong></div>
-    <div class="health-row"><span>Content completeness</span><div class="progress"><span style="width:86%"></span></div><strong>86%</strong></div>
-    <div class="health-row"><span>Location accuracy</span><div class="progress"><span style="width:91%"></span></div><strong>91%</strong></div>
-    <div class="health-row"><span>Availability freshness</span><div class="progress"><span style="width:77%"></span></div><strong>77%</strong></div>
-    <div class="health-row"><span>AI structured fields</span><div class="progress"><span style="width:71%"></span></div><strong>71%</strong></div>
+    <div class="health-row interactive"><span>Matching precision</span><div class="progress"><span style="width:94%"></span></div><strong>94%</strong></div>
+    <div class="health-row interactive"><span>Content completeness</span><div class="progress"><span style="width:86%"></span></div><strong>86%</strong></div>
+    <div class="health-row interactive"><span>Location accuracy</span><div class="progress"><span style="width:91%"></span></div><strong>91%</strong></div>
+    <div class="health-row interactive"><span>Availability freshness</span><div class="progress"><span style="width:77%"></span></div><strong>77%</strong></div>
+    <div class="health-row interactive"><span>AI structured fields</span><div class="progress"><span style="width:71%"></span></div><strong>71%</strong></div>
   </div>
 </div>
 </section>
@@ -184,7 +205,7 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
   <p><strong>Run the matching simulation.</strong><br>Recalculate the synthetic model metrics at the selected threshold and refresh the candidate decision.</p>
   <button class="btn" id="runModelBtn" onclick="runModel()">▶ Run model</button>
   <div class="run-status" id="runStatus">Ready</div>
-</div>
+</div><div class="model-log" id="modelLog"></div>
 
 <div class="card card-pad mt">
   <div class="card-title"><h3>Candidate scenarios</h3><span>Switch examples to test the same threshold</span></div>
@@ -196,9 +217,9 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 </div>
 
 <div class="compare mt">
-  <div class="card listing"><div class="listing-head"><span class="badge blue" id="p1">Partner Alpha</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder" id="img1"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name1">Alpine Lodge Munich</h3><div class="listing-address" id="addr1">Schlierseer Str. 14 · Bavaria · Germany</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo1">47.7378, 11.8592</b></div><div class="attr"><span>Bedrooms</span><b id="bed1">3</b></div><div class="attr"><span>Guests</span><b id="guest1">6</b></div><div class="attr"><span>Amenities</span><b id="amen1">Sauna · Wi-Fi · Parking</b></div></div></div>
+  <div class="card listing"><div class="listing-head"><span class="badge blue" id="p1">Partner Alpha</span><span class="badge green">Active</span></div><div class="listing-img interactive" id="img1"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name1">Alpine Lodge Munich</h3><div class="listing-address" id="addr1">Schlierseer Str. 14 · Bavaria · Germany</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo1">47.7378, 11.8592</b></div><div class="attr"><span>Bedrooms</span><b id="bed1">3</b></div><div class="attr"><span>Guests</span><b id="guest1">6</b></div><div class="attr"><span>Amenities</span><b id="amen1">Sauna · Wi-Fi · Parking</b></div></div></div>
   <div class="match-center"><div class="score-ring" id="scoreRing"><strong id="candidateScore">94%</strong></div><div class="match-line"></div><div class="decision" id="matchDecision">MERGE</div></div>
-  <div class="card listing"><div class="listing-head"><span class="badge orange" id="p2">Partner Beta</span><span class="badge green">Active</span></div><div class="listing-img visual-placeholder" id="img2"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name2">Alpine Holiday Home near Munich</h3><div class="listing-address" id="addr2">Schlierseer Straße 14 · Bayern · DE</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo2">47.7379, 11.8590</b></div><div class="attr"><span>Bedrooms</span><b id="bed2">3</b></div><div class="attr"><span>Guests</span><b id="guest2">6</b></div><div class="attr"><span>Amenities</span><b id="amen2">Sauna · Internet · Car park</b></div></div></div>
+  <div class="card listing"><div class="listing-head"><span class="badge orange" id="p2">Partner Beta</span><span class="badge green">Active</span></div><div class="listing-img interactive" id="img2"><span class="image-label">Image similarity · 0.96</span></div><h3 id="name2">Alpine Holiday Home near Munich</h3><div class="listing-address" id="addr2">Schlierseer Straße 14 · Bayern · DE</div><div class="attributes mt"><div class="attr"><span>Coordinates</span><b id="geo2">47.7379, 11.8590</b></div><div class="attr"><span>Bedrooms</span><b id="bed2">3</b></div><div class="attr"><span>Guests</span><b id="guest2">6</b></div><div class="attr"><span>Amenities</span><b id="amen2">Sauna · Internet · Car park</b></div></div></div>
 </div>
 
 <div class="card mt"><div class="card-title card-pad" style="margin:0"><h3>How I would evaluate matching</h3><span>Beyond a single offline metric</span></div><div class="table-wrap"><table>
@@ -268,7 +289,13 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 
 <section class="page" id="ai">
 <div class="section-head"><div class="eyebrow">Post-Search Discovery</div><h1>Design the catalog for questions, not just filters.</h1><p>Conversational discovery requires reliable structured attributes and semantic enrichment. The product problem is to make the canonical catalog expressive enough that AI systems can retrieve inventory accurately without creating a separate source of truth.</p></div>
-<div class="card card-pad"><div class="card-title"><h3>Conversational accommodation discovery</h3><span>Interactive front-end prototype</span></div><div class="search-box"><input id="aiQuery" value="Pet-friendly cabin near Munich with sauna, mountain view and EV charger under €220/night"><button class="btn" id="aiRunBtn" onclick="runAISearch()">✦ Analyze Query</button></div></div>
+<div class="card card-pad"><div class="card-title"><h3>Conversational accommodation discovery</h3><span>Interactive front-end prototype</span></div><div class="search-box"><input id="aiQuery" value="Pet-friendly cabin near Munich with sauna, mountain view and EV charger under €220/night"><button class="btn" id="aiRunBtn" onclick="runAISearch()">✦ Analyze Query</button></div>
+    <div class="example-queries">
+      <button class="query-chip" onclick="setAIQuery('Beach house in Spain for 6 guests with pool under €300/night')">Beach house in Spain</button>
+      <button class="query-chip" onclick="setAIQuery('Apartment in Paris with balcony and Wi-Fi under €180/night')">Apartment in Paris</button>
+      <button class="query-chip" onclick="setAIQuery('Family-friendly villa with pool, parking and 4 bedrooms')">Family-friendly villa</button>
+    </div>
+    <div class="ai-status" id="aiStatus">Parsing natural-language intent…</div></div>
 <div class="ai-flow mt">
   <div class="ai-box"><h4>1 · User intent</h4><p id="queryDisplay" style="font-size:10px;color:var(--muted);line-height:1.6">Pet-friendly cabin near Munich with sauna, mountain view and EV charger under €220/night</p></div><div class="ai-arrow">→</div>
   <div class="ai-box"><h4>2 · Entity extraction</h4><div id="tokens"><span class="token">property_type: cabin</span><span class="token">pet_friendly: true</span><span class="token">sauna: true</span><span class="token">ev_charger: true</span><span class="token">mountain_view: true</span><span class="token">max_price: 220 EUR</span><span class="token">location: Munich area</span></div></div><div class="ai-arrow">→</div>
@@ -277,15 +304,15 @@ box-shadow:0 8px 18px rgba(17,24,39,.22)}
 </div>
 <div class="grid grid-2 mt">
   <div class="card card-pad"><div class="card-title"><h3>Illustrative ranked results</h3><span>Semantic + structured match</span></div>
-    <div class="result-card"><div class="result-img visual-placeholder"></div><div><h4>Bavarian Mountain Cabin</h4><p>6 guests · Sauna · Pets · EV charging · Mountain view</p></div><div><strong>97%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
-    <div class="result-card"><div class="result-img visual-placeholder"></div><div><h4>Alpine Forest Retreat</h4><p>4 guests · Sauna · Pets · Mountain view</p></div><div><strong>94%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
+    <div class="result-card"><div class="result-img ai-photo"></div><div><h4>Bavarian Mountain Cabin</h4><p>6 guests · Sauna · Pets · EV charging · Mountain view</p></div><div><strong>97%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
+    <div class="result-card"><div class="result-img ai-photo"></div><div><h4>Alpine Forest Retreat</h4><p>4 guests · Sauna · Pets · Mountain view</p></div><div><strong>94%</strong><div style="font-size:8px;color:var(--muted)">match</div></div></div>
   </div>
   <div class="card card-pad"><div class="card-title"><h3>AI readiness framework</h3><span>Synthetic coverage</span></div>
-    <div class="health-row"><span>Normalized amenities</span><div class="progress"><span style="width:84%"></span></div><strong>84%</strong></div>
-    <div class="health-row"><span>Semantic descriptions</span><div class="progress"><span style="width:68%"></span></div><strong>68%</strong></div>
-    <div class="health-row"><span>Property taxonomy</span><div class="progress"><span style="width:91%"></span></div><strong>91%</strong></div>
-    <div class="health-row"><span>Geo entities</span><div class="progress"><span style="width:96%"></span></div><strong>96%</strong></div>
-    <div class="health-row"><span>Structured pricing</span><div class="progress"><span style="width:79%"></span></div><strong>79%</strong></div>
+    <div class="health-row interactive"><span>Normalized amenities</span><div class="progress"><span style="width:84%"></span></div><strong>84%</strong></div>
+    <div class="health-row interactive"><span>Semantic descriptions</span><div class="progress"><span style="width:68%"></span></div><strong>68%</strong></div>
+    <div class="health-row interactive"><span>Property taxonomy</span><div class="progress"><span style="width:91%"></span></div><strong>91%</strong></div>
+    <div class="health-row interactive"><span>Geo entities</span><div class="progress"><span style="width:96%"></span></div><strong>96%</strong></div>
+    <div class="health-row interactive"><span>Structured pricing</span><div class="progress"><span style="width:79%"></span></div><strong>79%</strong></div>
   </div>
 </div>
 <div class="card decision-card mt"><h3>Product principle: one canonical catalog, multiple representations</h3><p>I would avoid creating a separate “AI inventory” as the long-term architecture. The canonical property/unit/offer model should remain the source of truth, while embeddings, generated summaries and LLM-oriented representations are derived enrichment layers with provenance and confidence.</p></div>
@@ -435,31 +462,102 @@ function setCase(key){
  const c=cases[key];currentScore=c.score;document.querySelectorAll(".case-tab").forEach(x=>x.classList.toggle("active",x.dataset.case===key));
  const map={p1:c.p1,p2:c.p2,name1:c.n1,name2:c.n2,addr1:c.a1,addr2:c.a2,geo1:c.g1,geo2:c.g2,bed1:c.b1,bed2:c.b2,guest1:c.u1,guest2:c.u2,amen1:c.m1,amen2:c.m2};
  Object.entries(map).forEach(([id,val])=>document.getElementById(id).textContent=val);
- document.getElementById("img1").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;document.getElementById("img2").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;candidateScore.textContent=c.score+"%";
+ document.getElementById("img1").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;document.getElementById("img2").innerHTML=`<span class="image-label">Image similarity · ${c.img}</span>`;
+ const photoKind=key==="different"?"city":(key==="ambiguous"?"lake":"alpine");applyPhoto("img1",photoKind);applyPhoto("img2",photoKind);
+ candidateScore.textContent=c.score+"%";
  scoreRing.style.background=`conic-gradient(var(--green) 0 ${c.score}%,#e9edf3 ${c.score}% 100%)`;updateThreshold();
 }
 document.querySelectorAll(".case-tab").forEach(x=>x.addEventListener("click",()=>setCase(x.dataset.case)));setCase("obvious");
 
 function runModel(){
- const btn=document.getElementById("runModelBtn"),status=document.getElementById("runStatus");
- btn.classList.add("running");btn.textContent="Running…";status.textContent="Evaluating candidates…";status.style.color="var(--blue)";
- setTimeout(()=>{updateThreshold();document.querySelector(".control-panel").classList.add("pulse");status.textContent="✓ Simulation complete";status.style.color="var(--green)";btn.classList.remove("running");btn.textContent="▶ Run again";
- setTimeout(()=>document.querySelector(".control-panel").classList.remove("pulse"),500)},650);
+ const btn=document.getElementById("runModelBtn"),status=document.getElementById("runStatus"),log=document.getElementById("modelLog");
+ btn.classList.add("running");btn.textContent="Running…";status.textContent="Scoring candidate pairs…";status.style.color="var(--blue)";
+ log.classList.add("show");log.innerHTML="→ Loading candidate features…";
+ setTimeout(()=>log.innerHTML+="<br>→ Computing geo, image, name, capacity and amenity similarity…",250);
+ setTimeout(()=>log.innerHTML+="<br>→ Applying confidence threshold "+thresholdValue.textContent+"…",500);
+ setTimeout(()=>{
+   updateThreshold();
+   document.querySelectorAll(".trade").forEach(x=>x.classList.add("metric-flash"));
+   const decision=currentScore>=Number(slider.value)?"MERGE":"KEEP SEPARATE";
+   log.innerHTML+="<br>✓ Candidate score: "+currentScore+"% → <strong>"+decision+"</strong>";
+   status.textContent="✓ Simulation complete";status.style.color="var(--green)";btn.classList.remove("running");btn.textContent="▶ Run again";
+   setTimeout(()=>document.querySelectorAll(".trade").forEach(x=>x.classList.remove("metric-flash")),600);
+ },850);
 }
 
 function runAISearch(){
- const input=document.getElementById("aiQuery"),display=document.getElementById("queryDisplay"),tokens=document.getElementById("tokens"),btn=document.getElementById("aiRunBtn"),q=input.value.trim();if(!q)return;btn.classList.add("running");btn.textContent="Analyzing…";display.textContent=q;const s=q.toLowerCase(),a=[];
+ const input=document.getElementById("aiQuery"),display=document.getElementById("queryDisplay"),tokens=document.getElementById("tokens"),btn=document.getElementById("aiRunBtn"),status=document.getElementById("aiStatus"),q=input.value.trim();if(!q)return;btn.classList.add("running");btn.textContent="Analyzing…";status.classList.add("show");status.textContent="Parsing intent and mapping terms to the canonical schema…";display.textContent=q;const s=q.toLowerCase(),a=[];
  if(s.includes("cabin")||s.includes("chalet"))a.push(["property_type","cabin"]);
  if(s.includes("pet")||s.includes("dog"))a.push(["pet_friendly","true"]);
  if(s.includes("sauna"))a.push(["sauna","true"]);
  if(s.includes("ev")||s.includes("electric"))a.push(["ev_charger","true"]);
  if(s.includes("mountain"))a.push(["mountain_view","true"]);
+ if(s.includes("pool"))a.push(["pool","true"]);
+ if(s.includes("balcony"))a.push(["balcony","true"]);
+ if(s.includes("parking"))a.push(["parking","true"]);
+ if(s.includes("wifi")||s.includes("wi-fi"))a.push(["wifi","true"]);
+ const gm=s.match(/(\d+)\s*guests?/);if(gm)a.push(["guests",gm[1]]);
+ const bm=s.match(/(\d+)\s*bedrooms?/);if(bm)a.push(["bedrooms",bm[1]]);
  if(s.includes("munich"))a.push(["location","Munich area"]);
+ if(s.includes("spain"))a.push(["location","Spain"]);
+ if(s.includes("paris"))a.push(["location","Paris"]);
  const pm=s.match(/(?:€|eur\s*)(\d+)/i)||s.match(/(\d+)\s*(?:€|eur)/i);if(pm)a.push(["max_price",pm[1]+" EUR"]);
  if(!a.length)a.push(["intent","semantic accommodation search"]);
- setTimeout(()=>{tokens.innerHTML=a.map(x=>`<span class="token">${x[0]}: ${x[1]}</span>`).join("");btn.classList.remove("running");btn.textContent="✓ Analyzed";setTimeout(()=>btn.textContent="✦ Analyze Query",1200)},500);
+ setTimeout(()=>{tokens.innerHTML=a.map(x=>`<span class="token">${x[0]}: ${x[1]}</span>`).join("");status.textContent="✓ Intent mapped to "+a.length+" structured attributes. Synthetic retrieval refreshed.";btn.classList.remove("running");btn.textContent="✓ Analyzed";setTimeout(()=>btn.textContent="✦ Analyze Query",1200)},650);
 }
 document.getElementById("aiQuery").addEventListener("keydown",e=>{if(e.key==="Enter")runAISearch()});
+
+// ===== V3 self-contained accommodation photos (embedded SVG data URIs) =====
+function svgPhoto(variant){
+ const palettes={
+  alpine:["#9ec8e8","#d9e7d4","#36543e","#5d4435","#ead9b8","#23313c"],
+  lake:["#9fc7e5","#dce8d7","#476a52","#6b5140","#e6d5b5","#2d3944"],
+  city:["#c7d4e7","#e8dfd1","#6b7588","#4b4f59","#e9cfa9","#30343b"]
+ };
+ const p=palettes[variant]||palettes.alpine;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+ <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${p[0]}"/><stop offset="1" stop-color="#eef5f8"/></linearGradient>
+ <linearGradient id="glass"><stop stop-color="#dcecf2"/><stop offset="1" stop-color="#91afbd"/></linearGradient></defs>
+ <rect width="1200" height="520" fill="url(#sky)"/>
+ <path d="M0 300L190 150l110 86L450 74l155 170L760 112l200 190L1200 170v350H0z" fill="${p[1]}"/>
+ <path d="M0 355L210 210l120 90L470 125l160 180L795 180l170 150L1200 220v300H0z" fill="${p[2]}" opacity=".9"/>
+ <rect x="385" y="250" width="550" height="205" rx="7" fill="${p[4]}"/>
+ <path d="M340 265L650 135l340 130z" fill="${p[3]}"/>
+ <rect x="430" y="282" width="100" height="130" fill="url(#glass)"/><rect x="555" y="282" width="100" height="130" fill="url(#glass)"/>
+ <rect x="680" y="282" width="100" height="130" fill="url(#glass)"/><rect x="805" y="282" width="85" height="130" fill="url(#glass)"/>
+ <g fill="${p[5]}"><rect x="418" y="270" width="14" height="165"/><rect x="530" y="270" width="14" height="165"/><rect x="655" y="270" width="14" height="165"/><rect x="780" y="270" width="14" height="165"/><rect x="890" y="270" width="14" height="165"/></g>
+ <rect x="370" y="435" width="590" height="20" fill="#795c43"/><ellipse cx="1050" cy="445" rx="220" ry="50" fill="#4d724f" opacity=".75"/>
+ </svg>`;
+ return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+const PHOTO={alpine:svgPhoto("alpine"),lake:svgPhoto("lake"),city:svgPhoto("city")};
+
+function applyPhoto(id,kind){
+ const el=document.getElementById(id); if(el) el.style.backgroundImage=PHOTO[kind]||PHOTO.alpine;
+}
+applyPhoto("img1","alpine");applyPhoto("img2","alpine");
+document.querySelectorAll(".ai-photo").forEach((el,i)=>el.style.backgroundImage=i?PHOTO.lake:PHOTO.alpine);
+
+function showTip(e,text){
+ let tip=document.getElementById("globalTooltip");
+ if(!tip){tip=document.createElement("div");tip.id="globalTooltip";tip.className="chart-tooltip";document.body.appendChild(tip)}
+ tip.textContent=text;tip.style.left=(e.clientX+14)+"px";tip.style.top=(e.clientY+14)+"px";tip.classList.add("show");
+}
+function hideTip(){const t=document.getElementById("globalTooltip");if(t)t.classList.remove("show")}
+document.querySelectorAll(".trade,.bar,.metric,.health-row").forEach(el=>{
+ el.addEventListener("mousemove",e=>{
+  let text=el.dataset.tip;
+  if(!text){
+   if(el.classList.contains("metric")) text="Synthetic case-study metric. Hover interactions are included to make the analytical story easier to inspect.";
+   else if(el.classList.contains("health-row")) text="Illustrative coverage/quality indicator used to diagnose catalog health.";
+  }
+  if(text)showTip(e,text);
+ });
+ el.addEventListener("mouseleave",hideTip);
+});
+
+function setAIQuery(q){document.getElementById("aiQuery").value=q;runAISearch()}
+
 </script>
 </body>
 </html>
